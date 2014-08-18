@@ -9,7 +9,7 @@ class LampShow : public Scheduler {
     LampShow();
     ~LampShow();
     virtual void schedule();
-    void playLampShow(char filename[]);
+    void playLampShow(const char filename[]);
   protected:
   private:
 };
