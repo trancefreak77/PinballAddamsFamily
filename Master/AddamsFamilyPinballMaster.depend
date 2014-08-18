@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1407958968 source:c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\domain\modelbase.cpp
+	"ModelBase.h"
+
+1394058197 c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\domain\modelbase.h
+
+1407959082 source:c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\domain\scheduler.cpp
+	"Scheduler.h"
+	"../Timer/CounterSpan.h"
+	<propeller.h>
+
+1407959002 c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\domain\scheduler.h
+	<stdint.h>
+	"ModelBase.h"
+
+1391784749 c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\timer\counterspan.h
+	<stdint.h>
+
+1394748376 source:c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\domain\schedulerregistry.cpp
+	"SchedulerRegistry.h"
+	<propeller.h>
+
+1394062940 c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\domain\schedulerregistry.h
+	"Scheduler.h"
+
+1407959192 source:c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\timer\counterspan.c
+	<stdint.h>
+	<propeller.h>
+	"CounterSpan.h"
+
+1394748343 source:c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\timer\pausetimer.cpp
+	"PauseTimer.h"
+	"CounterSpan.h"
+	<propeller.h>
+
+1394058350 c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\timer\pausetimer.h
+	<stdint.h>
+

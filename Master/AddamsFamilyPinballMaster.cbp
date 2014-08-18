@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="AddamsFamilyPinballMaster" />
+		<Option pch_mode="2" />
+		<Option compiler="propeller_gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/AddamsFamilyPinballMaster.elf" prefix_auto="1" extension_auto="0" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="propeller_gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="lib/Domain" />
+					<Add directory="lib/Lamps" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/AddamsFamilyPinballMaster.elf" prefix_auto="1" extension_auto="0" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="propeller_gcc" />
+				<Compiler>
+					<Add directory="lib/Domain" />
+					<Add directory="lib/Lamps" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Os" />
+			<Add option="-std=c++0x" />
+			<Add option="-Wall" />
+			<Add option="-mcmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
+			<Add directory="../lib" />
+		</Compiler>
+		<Linker>
+			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti" />
+			<Add directory="../lib" />
+		</Linker>
+		<Unit filename="../lib/Domain/AutonomousKicker.cpp" />
+		<Unit filename="../lib/Domain/AutonomousKicker.h" />
+		<Unit filename="../lib/Domain/ModelBase.cpp" />
+		<Unit filename="../lib/Domain/ModelBase.h" />
+		<Unit filename="../lib/Domain/OneTimeHitCounter.cpp" />
+		<Unit filename="../lib/Domain/OneTimeHitCounter.h" />
+		<Unit filename="../lib/Domain/OutputActivator.cpp" />
+		<Unit filename="../lib/Domain/OutputActivator.h" />
+		<Unit filename="../lib/Domain/Scheduler.cpp" />
+		<Unit filename="../lib/Domain/Scheduler.h" />
+		<Unit filename="../lib/Domain/SchedulerRegistry.cpp" />
+		<Unit filename="../lib/Domain/SchedulerRegistry.h" />
+		<Unit filename="../lib/Game/EventMessage.cpp" />
+		<Unit filename="../lib/Game/EventMessage.h" />
+		<Unit filename="../lib/Game/InOperationState.cpp" />
+		<Unit filename="../lib/Game/InOperationState.h" />
+		<Unit filename="../lib/Game/PinballHSM.cpp" />
+		<Unit filename="../lib/Game/PinballHSM.h" />
+		<Unit filename="../lib/Game/StateBase.cpp" />
+		<Unit filename="../lib/Game/StateBase.h" />
+		<Unit filename="../lib/Lamps/LampShow.cpp" />
+		<Unit filename="../lib/Lamps/LampShow.h" />
+		<Unit filename="../lib/Timer/CounterSpan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../lib/Timer/CounterSpan.h" />
+		<Unit filename="../lib/Timer/PauseTimer.cpp" />
+		<Unit filename="../lib/Timer/PauseTimer.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
