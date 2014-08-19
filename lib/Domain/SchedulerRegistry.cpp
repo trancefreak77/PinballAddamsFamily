@@ -22,7 +22,7 @@ void SchedulerRegistry::addScheduler (Scheduler &scheduler, uint16_t updateInter
   scheduler.setUpdateIntervalMs(updateIntervalMs);
 }
 
-HUBTEXT void SchedulerRegistry::schedule() {
+void SchedulerRegistry::schedule() {
   for (int i = 0; i < _schedulersInList; i++) {
     if (_pSchedulers[i]->shouldSchedule()) {
       _pSchedulers[i]->schedule();

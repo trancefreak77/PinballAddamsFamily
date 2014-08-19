@@ -2,16 +2,25 @@
 #define LAMPSHOW_H
 
 #include "Domain\Scheduler.h"
-
+#include "LampShowWorker.h"
+class LampShowWorker;
 
 class LampShow : public Scheduler {
   public:
+    enum class Sequence {
+      BallPlunged,
+      Multiball,
+      Jackpot,
+      SuperJackpot
+    };
+
     LampShow();
     ~LampShow();
-    virtual void schedule();
-    void playLampShow(const char filename[]);
+    void schedule();
+    void playLampShow(Sequence sequence);
   protected:
   private:
+    LampShowWorker *_pWorkerArray[3];
 };
 
 #endif // LAMPSHOW_H

@@ -1,67 +1,58 @@
 #include "LampShow.h"
+#include "MultiballLampShowWorker.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <propeller.h>
 
 LampShow::LampShow() {
-  //ctor
+  for (int i = 0; i < 3; i++) {
+    _pWorkerArray[i] = nullptr;
+  }
 }
 
 LampShow::~LampShow() {
   //dtor
 }
 void LampShow::schedule() {
+  // printf("In LampShow::schedule...\n");
   Scheduler::schedule();
+  for (int i = 0; i < 3; i++) {
+    if (_pWorkerArray[i] != nullptr) {
+      // printf("Calling lampShowWorker->schedule()...\n");
+      _pWorkerArray[i]->schedule();
+    }
+  }
 }
-void LampShow::playLampShow(const char filename[]) {
-  // Load the file from sd card and parse it.
-  // The first line in the file tells us, how many
-  // lamps are defined within the file.
+void LampShow::playLampShow(Sequence sequence) {
+  // If all workers are full, we cannot
+  // start a new one else start one.
   printf("In playLampShow...\n");
-  char buffer[1024];
-  int startCNT = CNT;
-  FILE *fp = fopen(filename, "r");
-//  if (!fp) {
-//    // Unable to open file. Lamp show cannot
-//    // be played.
-//    printf("Unable to open file...\n");
-//    return;
-//  }
+  int i = -1;
+  for (int index = 0; index < 3; index++) {
+    if (_pWorkerArray[index] == nullptr) {
+      // We found an empty slot!
+      i = index;
+      printf("Found an empty worker slot at index %d...\n", i);
+      break;
+    }
+  }
 
-  // Read the number of lamps
-//  if (!fgets(buffer, 512, fp)) {
-//    // Error or nothing to read.
-//    printf("Error or nothing to read...\n");
-//    return;
-//  }
+  if (i < 0) {
+    return;
+  }
 
-  // Parse the number of lamps from char*
-  // int numberOfLamps = atoi(buffer);
-  // printf("Buffer: %d\n", numberOfLamps);
+  switch (sequence) {
+    case LampShow::Sequence::Multiball:
+      printf("Creating new multiball lampShowWorker...\n");
+      _pWorkerArray[i] = new MultiballLampShowWorker;
+      break;
 
-//  // Buffer contains now the first line.
-//  // 1. Schritt: Dynamische Array von Zeigern anlegen:
-//  char** p2DimArr = new char*[numberOfLamps];
-//
-//  // 2. Schritt: An jeden Zeiger ein Array hängen
-//  for (int i = 0; i < numberOfLamps ; i++)
-//    p2DimArr[i] = new char[100];
-//
-//  // mit dem neuen 2-dimensionalen Array arbeiten
-//  p2DimArr[0][0] = 0xFF;
-//  //...
+    case LampShow::Sequence::BallPlunged:
+      break;
 
-  fread(buffer, 1, 1024, fp);
+    case LampShow::Sequence::Jackpot:
+      break;
 
-  // alles wieder löschen
-//  for (int j = 0; j < numberOfLamps ; j++)
-//    delete [] p2DimArr[j] ;
-//  delete [] p2DimArr;
-
-  int endCNT = CNT;
-
-  printf("Buffer: ");
-  printf(buffer);
-  printf("\n");
-  printf("Lamp show array created. Ticks: %d\n", endCNT - startCNT);
+    case LampShow::Sequence::SuperJackpot:
+      break;
+  }
 }
