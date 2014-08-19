@@ -6,7 +6,7 @@
 class MultiballLampShowWorker : public LampShowWorker
 {
   public:
-    MultiballLampShowWorker();
+    MultiballLampShowWorker(LampShow *pParentLampShow);
     virtual ~MultiballLampShowWorker();
     virtual void schedule();
   protected:

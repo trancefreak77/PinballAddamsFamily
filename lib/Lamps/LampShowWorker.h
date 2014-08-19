@@ -6,12 +6,12 @@ class LampShow;
 
 class LampShowWorker {
   public:
-    LampShowWorker();
+    LampShowWorker(LampShow *pParentLampShow);
     ~LampShowWorker();
     virtual void schedule();
   protected:
+    LampShow *_pParentLampShow;
   private:
-    LampShow *pParentLampShow;
 };
 
 #endif // LAMPSHOWWORKER_H

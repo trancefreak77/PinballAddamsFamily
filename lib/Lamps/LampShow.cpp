@@ -12,6 +12,11 @@ LampShow::LampShow() {
 LampShow::~LampShow() {
   //dtor
 }
+
+void LampShow::finishedLampShow() {
+  printf("FINISHED LAMP SHOW!!!!\n");
+}
+
 void LampShow::schedule() {
   // printf("In LampShow::schedule...\n");
   Scheduler::schedule();
@@ -43,7 +48,7 @@ void LampShow::playLampShow(Sequence sequence) {
   switch (sequence) {
     case LampShow::Sequence::Multiball:
       printf("Creating new multiball lampShowWorker...\n");
-      _pWorkerArray[i] = new MultiballLampShowWorker;
+      _pWorkerArray[i] = new MultiballLampShowWorker(this);
       break;
 
     case LampShow::Sequence::BallPlunged:

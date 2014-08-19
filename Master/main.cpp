@@ -67,9 +67,9 @@ int main (void) {
 
     if (loopCount == 500) {
       loopCount = 0;
-      for (int z = 0; z < 500; z++) {
-        printf("main loop took ticks: %d\n", loopTicks[z]);
-      }
+      //for (int z = 0; z < 500; z++) {
+        // printf("main loop took ticks: %d\n", loopTicks[z]);
+      //}
     }
   }
 }

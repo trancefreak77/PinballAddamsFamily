@@ -1,7 +1,7 @@
-#include "LampShow.h"
+#include "LampShowWorker.h"
 
-LampShowWorker::LampShowWorker() {
-  //ctor
+LampShowWorker::LampShowWorker(LampShow *pParentLampShow) {
+  _pParentLampShow = pParentLampShow;
 }
 
 LampShowWorker::~LampShowWorker() {
