@@ -1,7 +1,8 @@
 #include "MultiballLampShowWorker.h"
 #include <stdio.h>
 
-MultiballLampShowWorker::MultiballLampShowWorker(LampShow *pParentLampShow) : LampShowWorker(pParentLampShow) {
+MultiballLampShowWorker::MultiballLampShowWorker(LampShow *pParentLampShow, bool shouldLoop)
+    : LampShowWorker(pParentLampShow, shouldLoop) {
   _currentState = 1;
 }
 
@@ -25,6 +26,10 @@ void MultiballLampShowWorker::schedule() {
       break;
     case 4 :
       _currentState = 1;
+      if (getShouldLoop()) {
+        break;
+      }
+
       _pParentLampShow->finishedLampShow(this);
       break;
   }

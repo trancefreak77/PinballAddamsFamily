@@ -2,6 +2,7 @@
 #define PINBALLHSM_H
 #include "Game\StateBase.h"
 #include "Game\InOperationState.h"
+#include "Domain\AutonomousKicker.h"
 #include <stdint.h>
 
 class PinballHSM {

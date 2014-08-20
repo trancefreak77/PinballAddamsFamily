@@ -54,7 +54,7 @@ void LampShow::playLampShow(Sequence sequence) {
   switch (sequence) {
   case LampShow::Sequence::Multiball:
     //printf("Creating new multiball lampShowWorker...\n");
-    _pWorkerArray[i] = new MultiballLampShowWorker(this);
+    _pWorkerArray[i] = new MultiballLampShowWorker(this, false);
     break;
 
   case LampShow::Sequence::BallPlunged:
