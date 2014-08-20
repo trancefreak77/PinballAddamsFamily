@@ -10,11 +10,11 @@ PauseTimer::~PauseTimer() {
   //dtor
 }
 
-HUBTEXT void PauseTimer::start() {
+void PauseTimer::start() {
   _startCnt = CNT;
 }
 
-HUBTEXT bool PauseTimer::isElapsed(uint16_t intervalMs) {
+bool PauseTimer::isElapsed(uint16_t intervalMs) {
   if (counterDiff(_startCnt, CNT) > msToCounterSpan(intervalMs)) {
     return true;
   }

@@ -7,6 +7,7 @@
 #include "Game\PinballHSM.h"
 #include "Lamps\LampShow.h"
 #include "Domain\PlayfieldSwitchEnum.h"
+#include "IODriverMailbox.h"
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
@@ -20,6 +21,18 @@ _Driver *_driverlist[] = {
   // &_FileDriver,
   NULL
 };
+
+/*
+ * This is the structure which we'll pass to the C cog.
+ * It contains a small stack for working area, and the
+ * mailbox which we use to communicate. See toggle.h
+ * for the definition/
+ */
+HUBDATA static struct {
+    uint32_t ioDriverStack[IO_DRIVER_STACK_SIZE];
+    volatile ioDriverMailbox_t ioDriverMailbox;
+} ioDriverPar;
+
 
 // Forward declaration
 void initializeScheduler();
@@ -39,13 +52,39 @@ AutonomousKicker bumper5(outputPort[4], inputPort[4], 30);
 AutonomousKicker slingshotLeft(outputPort[5], inputPort[5], 30);
 AutonomousKicker slingshotRight(outputPort[6], inputPort[6], 30);
 
-LampShow lampShow;
+LampShow lampShow((uint8_t *)ioDriverPar.ioDriverMailbox.lampState, outputPort);
 
 SchedulerRegistry schedulerRegistry;
 
+/*
+ * Function to start up a new cog running the IO driver
+ * code (which we have placed in the IODriver.cog section)
+ */
+uint8_t startIODriver(volatile void *parptr) {
+  extern unsigned int _load_start_IODriver_cog[];
+  #if defined(__PROPELLER_XMM__) || defined(__PROPELLER_XMMC__)
+    uint32_t hub_buffer[496];
+    extern unsigned int _load_stop_IODriver_cog[];
+    memcpy(hub_buffer, _load_start_IODriver_cog, (_load_stop_IODriver_cog - _load_start_IODriver_cog) * sizeof(uint32_t));
+    return cognew(hub_buffer, parptr);
+  #else
+    return cognew(_load_start_IODriver_cog, parptr);
+  #endif
+}
+
 int main (void) {
+  // Start the IO driver.
+  uint8_t cogId = startIODriver(&ioDriverPar.ioDriverMailbox);
+
+  // Initialize ports with test data.
+  outputPort[0] = 250;
+  outputPort[1] = 251;
+
+  ioDriverPar.ioDriverMailbox.lampState[0] = 11;
+  ioDriverPar.ioDriverMailbox.lampState[1] = 12;
+
   waitcnt(CLKFREQ + CNT);
-  // printf("In main...\n");
+//  printf("In main... Started ioDriver cogID: %d\n", cogId);
   //game.init();
   slingshotLeft.setNextActivationDeltaMs(40);
   slingshotRight.setNextActivationDeltaMs(40);
@@ -72,10 +111,12 @@ int main (void) {
 
     if (loopCount == 500) {
       loopCount = 0;
-      //for (int z = 0; z < 500; z++) {
-        // printf("main loop took ticks: %d\n", loopTicks[z]);
-      //}
+      for (int z = 0; z < 500; z++) {
+         // printf("main loop took ticks: %d\n", loopTicks[z]);
+      }
     }
+
+    // printf("IODriver loop took: %d\n", ioDriverPar.ioDriverMailbox.loopTicks);
   }
 }
 
