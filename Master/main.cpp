@@ -43,15 +43,15 @@ SchedulerRegistry schedulerRegistry;
 
 int main (void) {
   waitcnt(CLKFREQ + CNT);
-  printf("In main...\n");
+  // printf("In main...\n");
   //game.init();
   slingshotLeft.setNextActivationDeltaMs(40);
   slingshotRight.setNextActivationDeltaMs(40);
 
-  printf("After setting activation delta of slingshots...\n");
+  //printf("After setting activation delta of slingshots...\n");
   initializeScheduler();
 
-  printf("After initializing scheduler...\n");
+  //printf("After initializing scheduler...\n");
   lampShow.playLampShow(LampShow::Sequence::Multiball);
 
   int loopTicks[500];

@@ -25,7 +25,7 @@ void MultiballLampShowWorker::schedule() {
       break;
     case 4 :
       _currentState = 1;
-      _pParentLampShow->finishedLampShow();
+      _pParentLampShow->finishedLampShow(this);
       break;
   }
 }

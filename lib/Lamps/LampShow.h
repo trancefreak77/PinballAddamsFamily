@@ -18,7 +18,7 @@ class LampShow : public Scheduler {
     ~LampShow();
     void schedule();
     void playLampShow(Sequence sequence);
-    void finishedLampShow();
+    void finishedLampShow(LampShowWorker *lampShowWorker);
   protected:
   private:
     LampShowWorker *_pWorkerArray[3];
