@@ -1,10 +1,12 @@
 #include <propeller.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "Domain\SchedulerRegistry.h"
 #include "Domain\AutonomousKicker.h"
 #include "Game\PinballHSM.h"
 #include "Lamps\LampShow.h"
+#include "Domain\PlayfieldSwitchEnum.h"
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
@@ -54,13 +56,16 @@ int main (void) {
   //printf("After initializing scheduler...\n");
   lampShow.playLampShow(LampShow::Sequence::Multiball);
 
-  int loopTicks[500];
-  int loopCount = 0;
+  uint32_t loopTicks[500];
+  uint32_t loopCount = 0;
+
+  PlayfieldSwitch pfSwitch = PlayfieldSwitch::ShooterLanePlungerSwitch;
+  uint32_t x = (uint32_t) pfSwitch;
 
   while (1) {
-    int startCnt = CNT;
+    uint32_t startCnt = CNT;
     schedulerRegistry.schedule();
-    int endCnt = CNT;
+    uint32_t endCnt = CNT;
 
     loopTicks[loopCount] = endCnt - startCnt;
     loopCount++;

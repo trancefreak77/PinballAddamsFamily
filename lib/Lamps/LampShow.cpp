@@ -2,9 +2,10 @@
 #include "MultiballLampShowWorker.h"
 #include <stdio.h>
 #include <propeller.h>
+#include <stdint.h>
 
 LampShow::LampShow() {
-  for (int i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     _pWorkerArray[i] = nullptr;
   }
 }
@@ -15,7 +16,7 @@ LampShow::~LampShow() {
 
 void LampShow::finishedLampShow(LampShowWorker *lampShowWorker) {
   // printf("FINISHED LAMP SHOW!!!!\n");
-  for (int i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (_pWorkerArray[i] != nullptr && _pWorkerArray[i] == lampShowWorker) {
       delete _pWorkerArray[i];
       _pWorkerArray[i] = nullptr;
@@ -26,7 +27,7 @@ void LampShow::finishedLampShow(LampShowWorker *lampShowWorker) {
 void LampShow::schedule() {
   // printf("In LampShow::schedule...\n");
   Scheduler::schedule();
-  for (int i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     if (_pWorkerArray[i] != nullptr) {
       // printf("Calling lampShowWorker->schedule()...\n");
       _pWorkerArray[i]->schedule();
@@ -38,7 +39,7 @@ void LampShow::playLampShow(Sequence sequence) {
   // start a new one else start one.
   //printf("In playLampShow...\n");
   int i = -1;
-  for (int index = 0; index < 3; index++) {
+  for (uint8_t index = 0; index < 3; index++) {
     if (_pWorkerArray[index] == nullptr) {
       // We found an empty slot!
       i = index;
