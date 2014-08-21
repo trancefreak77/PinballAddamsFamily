@@ -7,16 +7,11 @@ class PinballHSM;
 
 class StateBase {
   public:
+    // Define all notification events.
+    // Each state has to override it's own implementation.
     virtual void OnCoinInserted(PinballHSM &rHsm, uint16_t cents) {}
     virtual void OnCoinReleased(PinballHSM &rHsm) {}
-    virtual void OnTargetHit(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnLeftFlipperButtonPressed(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnRightFlipperButtonPressed(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnBumperHit(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnSlingshotHit(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnScoopHit(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnThingHoleHit(PinballHSM &rHsm, EventMessage &rMessage) {}
-    virtual void OnStartGamePressed(PinballHSM &rHsm, EventMessage &rMessage) {}
+    // virtual void OnTargetHit(PinballHSM &rHsm, EventMessage &rMessage) {}
   protected:
   private:
 };

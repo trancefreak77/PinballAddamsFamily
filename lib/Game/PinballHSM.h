@@ -18,25 +18,53 @@ class PinballHSM {
     // the different state implementations to set
     // the _currentState.
     static InOperationState inOperationState;
-
     void init();
 
-    void OnCoinInserted(uint16_t cents) {}
-    void OnCoinReleased() {}
-    void OnTargetHit(EventMessage &rMessage) {}
-    void OnLeftFlipperButtonPressed(EventMessage &rMessage) {}
-    void OnRightFlipperButtonPressed(EventMessage &rMessage) {}
-    void OnBumperHit(EventMessage &rMessage) {}
-    void OnSlingshotHit(EventMessage &rMessage) {}
-    void OnScoopHit(EventMessage &rMessage) {}
-    void OnThingHoleHit(EventMessage &rMessage) {}
-    void OnStartGamePressed(EventMessage &rMessage) {}
+    // Define all event notifications here!
+    // void OnStartGamePressed(EventMessage &rMessage) {}
+    void onBumper1SwitchClosed();
+    void onBumper1SwitchOpened();
+    void onBumper2SwitchClosed();
+    void onBumper2SwitchOpened();
+    void onBumper3SwitchClosed();
+    void onBumper3SwitchOpened();
+    void onBumper4SwitchClosed();
+    void onBumper4SwitchOpened();
+    void onBumper5SwitchClosed();
+    void onBumper5SwitchOpened();
+    void onLeftSlingshotSwitchClosed();
+    void onLeftSlingshotLeftSwitchOpened();
+    void onRightSlingshotSwitchClosed();
+    void onRightSlingshotSwitchOpened();
+    void onShooterLanePlungerSwitchClosed();
+    void onShooterLanePlungerSwitchOpened();
+    void onShooterLaneRampSwitchClosed();
+    void onShooterLaneRampSwitchOpened();
+    void onOuterLoopRightSwitchClosed();
+    void onOuterLoopRightSwitchOpened();
+    void onOuterLoopLeftSwitchClosed();
+    void onOuterLoopLeftSwitchOpened();
+    void onThingRampSwitchClosed();
+    void onThingRampSwitchOpened();
+    void onThingHoleSwitchClosed();
+    void onThingHoleSwitchOpened();
+    void onFarLeftInlaneSwitchClosed();
+    void onFarLeftInlaneSwitchOpened();
+    void onLeftOutlaneSwitchClosed();
+    void onLeftOutlaneSwitchOpened();
+    void onLeftInnerInlaneSwitchClosed();
+    void onLeftInnerInlaneSwitchOpened();
+    void onRightInlaneSwitchClosed();
+    void onRightInlaneSwitchOpened();
+    void onRightOutlaneSwitchClosed();
+    void onRightOutlaneSwitchOpened();
+    void onLeftFlipperButtonSwitchClosed();
+    void onLeftFlipperButtonSwitchOpened();
+    void onRightFlipperButtonSwitchClosed();
+    void onRightFlipperButtonSwitchOpened();
 
   protected:
   private:
-    void increaseCredit(uint16_t cents);
-    void decreaseCredit(uint16_t cents);
-
     StateBase *_pCurrentState;
     uint16_t _credits;          // Credit in cents.
 };

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <map>
 #include "Domain\SchedulerRegistry.h"
 #include "Domain\AutonomousKicker.h"
 #include "Game\PinballHSM.h"
@@ -34,25 +35,27 @@ HUBDATA static struct {
 } ioDriverPar;
 
 
-// Forward declaration
+// Forward declaration.
 void initializeScheduler();
+void initializeEventNotificationMap();
+
+// Define member function pointer map.
+typedef void (PinballHSM::*MFP)();
+std::map<uint8_t, MFP> fMap;
+
+PinballHSM game;
 
 // Playfield objects:
-// ------------------
-uint8_t inputPort[64];
-uint8_t outputPort[64];
-
-//PinballHSM game;
-AutonomousKicker bumper1(outputPort[0], inputPort[0], 30);
-AutonomousKicker bumper2(outputPort[1], inputPort[1], 30);
-AutonomousKicker bumper3(outputPort[2], inputPort[2], 30);
-AutonomousKicker bumper4(outputPort[3], inputPort[3], 30);
-AutonomousKicker bumper5(outputPort[4], inputPort[4], 30);
+AutonomousKicker bumper1((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[0], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[0], 30);
+AutonomousKicker bumper2((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[1], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[1], 30);
+AutonomousKicker bumper3((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[2], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[2], 30);
+AutonomousKicker bumper4((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[3], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[3], 30);
+AutonomousKicker bumper5((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[4], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[4], 30);
 //
-AutonomousKicker slingshotLeft(outputPort[5], inputPort[5], 30);
-AutonomousKicker slingshotRight(outputPort[6], inputPort[6], 30);
+AutonomousKicker slingshotLeft((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[5], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[5], 30);
+AutonomousKicker slingshotRight((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[6], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[6], 30);
 
-LampShow lampShow((uint8_t *)ioDriverPar.ioDriverMailbox.lampState, outputPort);
+LampShow lampShow((uint8_t *)ioDriverPar.ioDriverMailbox.lampState, (uint8_t *)ioDriverPar.ioDriverMailbox.outputPort);
 
 SchedulerRegistry schedulerRegistry;
 
@@ -73,50 +76,49 @@ uint8_t startIODriver(volatile void *parptr) {
 }
 
 int main (void) {
-  // Start the IO driver.
-  uint8_t cogId = startIODriver(&ioDriverPar.ioDriverMailbox);
+  // Start the IO driver cog.
+  startIODriver(&ioDriverPar.ioDriverMailbox);
 
   // Initialize ports with test data.
-  outputPort[0] = 250;
-  outputPort[1] = 251;
-
-  ioDriverPar.ioDriverMailbox.lampState[0] = 11;
-  ioDriverPar.ioDriverMailbox.lampState[1] = 12;
-
   waitcnt(CLKFREQ + CNT);
-//  printf("In main... Started ioDriver cogID: %d\n", cogId);
-  //game.init();
+
+  game.init();
   slingshotLeft.setNextActivationDeltaMs(40);
   slingshotRight.setNextActivationDeltaMs(40);
 
-  //printf("After setting activation delta of slingshots...\n");
   initializeScheduler();
 
-  //printf("After initializing scheduler...\n");
-  lampShow.playLampShow(LampShow::Sequence::Multiball);
-
-  uint32_t loopTicks[500];
-  uint32_t loopCount = 0;
-
-  PlayfieldSwitch pfSwitch = PlayfieldSwitch::ShooterLanePlungerSwitch;
-  uint32_t x = (uint32_t) pfSwitch;
+  uint8_t previousSwitchInpurtPort[64];
+  for (int i = 0; i < 64; i++) {
+    // Initialize with value 2 which means, not closed and not open.
+    previousSwitchInpurtPort[i] = 2;
+  }
 
   while (1) {
-    uint32_t startCnt = CNT;
+    // Schedule tasks.
     schedulerRegistry.schedule();
-    uint32_t endCnt = CNT;
 
-    loopTicks[loopCount] = endCnt - startCnt;
-    loopCount++;
-
-    if (loopCount == 500) {
-      loopCount = 0;
-      for (int z = 0; z < 500; z++) {
-         // printf("main loop took ticks: %d\n", loopTicks[z]);
+    // Handle only switch change events.
+    for (int i = 0; i < 64; i++) {
+      if (previousSwitchInpurtPort[i] == ioDriverPar.ioDriverMailbox.inputPort[i]) {
+        // No change happened.
+        continue;
       }
-    }
 
-    // printf("IODriver loop took: %d\n", ioDriverPar.ioDriverMailbox.loopTicks);
+      // Switch state changed, notify game state machine.
+      previousSwitchInpurtPort[i] = ioDriverPar.ioDriverMailbox.inputPort[i];
+      PlayfieldSwitch playfieldSwitch = (PlayfieldSwitch) i;
+
+      uint8_t functionMapLookupKey = i;
+      if (ioDriverPar.ioDriverMailbox.inputPort[i] == 0) {
+        functionMapLookupKey |= 0;      // Means switch is open (inactive).
+      } else {
+        functionMapLookupKey |= 128;    // Means switch is closed (active).
+      }
+
+      MFP fp = fMap[i];
+      (game.*fp)();
+    }
   }
 }
 
@@ -129,4 +131,19 @@ void initializeScheduler() {
   schedulerRegistry.addScheduler(slingshotLeft, 5);
   schedulerRegistry.addScheduler(slingshotRight, 5);
   schedulerRegistry.addScheduler(lampShow, 33);
+}
+
+void initializeEventNotificationMap() {
+  // | 0   == Switch open and inactive
+  // | 128 == Switch closed and active
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLanePlungerSwitch)  | 0,   &PinballHSM::onShooterLanePlungerSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLanePlungerSwitch)  | 128, &PinballHSM::onShooterLanePlungerSwitchClosed));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLaneRampSwitch)     | 0,   &PinballHSM::onShooterLaneRampSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLaneRampSwitch)     | 128, &PinballHSM::onShooterLaneRampSwitchClosed));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopRightSwitch)      | 0,   &PinballHSM::onOuterLoopRightSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopRightSwitch)      | 128, &PinballHSM::onOuterLoopRightSwitchClosed));
+}
+
+void playLampShow() {
+  lampShow.playLampShow(LampShow::Sequence::Multiball);
 }
