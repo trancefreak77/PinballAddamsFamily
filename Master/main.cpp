@@ -86,6 +86,7 @@ int main (void) {
   slingshotLeft.setNextActivationDeltaMs(40);
   slingshotRight.setNextActivationDeltaMs(40);
 
+  initializeEventNotificationMap();
   initializeScheduler();
 
   uint8_t previousSwitchInpurtPort[64];
@@ -138,10 +139,54 @@ void initializeEventNotificationMap() {
   // | 128 == Switch closed and active
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLanePlungerSwitch)  | 0,   &PinballHSM::onShooterLanePlungerSwitchOpened));
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLanePlungerSwitch)  | 128, &PinballHSM::onShooterLanePlungerSwitchClosed));
+
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLaneRampSwitch)     | 0,   &PinballHSM::onShooterLaneRampSwitchOpened));
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLaneRampSwitch)     | 128, &PinballHSM::onShooterLaneRampSwitchClosed));
+
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopRightSwitch)      | 0,   &PinballHSM::onOuterLoopRightSwitchOpened));
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopRightSwitch)      | 128, &PinballHSM::onOuterLoopRightSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopLeftSwitch)       | 0,   &PinballHSM::onShooterLanePlungerSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopLeftSwitch)       | 128, &PinballHSM::onShooterLanePlungerSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingRampSwitch)           | 0,   &PinballHSM::onShooterLaneRampSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingRampSwitch)           | 128, &PinballHSM::onShooterLaneRampSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingHoleSwitch)           | 0,   &PinballHSM::onOuterLoopRightSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingHoleSwitch)           | 128, &PinballHSM::onOuterLoopRightSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::FarLeftInlaneSwitch)       | 0,   &PinballHSM::onFarLeftInlaneSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::FarLeftInlaneSwitch)       | 128, &PinballHSM::onFarLeftInlaneSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftOutlaneSwitch)         | 0,   &PinballHSM::onLeftOutlaneSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftOutlaneSwitch)         | 128, &PinballHSM::onLeftOutlaneSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::InnerLeftInlaneSwitch)     | 0,   &PinballHSM::onLeftInnerInlaneSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::InnerLeftInlaneSwitch)     | 128, &PinballHSM::onLeftInnerInlaneSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightInlaneSwitch)         | 0,   &PinballHSM::onRightInlaneSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightInlaneSwitch)         | 128, &PinballHSM::onRightInlaneSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightOutlaneSwitch)        | 0,   &PinballHSM::onRightOutlaneSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightOutlaneSwitch)        | 128, &PinballHSM::onRightOutlaneSwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper1Switch)             | 0,   &PinballHSM::onBumper1SwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper1Switch)             | 128, &PinballHSM::onBumper1SwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper2Switch)             | 0,   &PinballHSM::onBumper2SwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper2Switch)             | 128, &PinballHSM::onBumper2SwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper3Switch)             | 0,   &PinballHSM::onBumper3SwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper3Switch)             | 128, &PinballHSM::onBumper3SwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper4Switch)             | 0,   &PinballHSM::onBumper4SwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper4Switch)             | 128, &PinballHSM::onBumper4SwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper5Switch)             | 0,   &PinballHSM::onBumper5SwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper5Switch)             | 128, &PinballHSM::onBumper5SwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 0,   &PinballHSM::onLeftFlipperButtonSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 128, &PinballHSM::onLeftFlipperButtonSwitchClosed));
 }
 
 void playLampShow() {
