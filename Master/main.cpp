@@ -117,7 +117,7 @@ int main (void) {
         functionMapLookupKey |= 128;    // Means switch is closed (active).
       }
 
-      MFP fp = fMap[i];
+      MFP fp = fMap[functionMapLookupKey];
       (game.*fp)();
     }
   }

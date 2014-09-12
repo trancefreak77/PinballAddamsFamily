@@ -60,19 +60,19 @@ void LampShow::playLampShow(Sequence sequence) {
   }
 
   switch (sequence) {
-  case LampShow::Sequence::Multiball:
-    //printf("Creating new multiball lampShowWorker...\n");
-    _pWorkerArray[i] = new MultiballLampShowWorker(this, false);
-    break;
+    case LampShow::Sequence::Multiball:
+      //printf("Creating new multiball lampShowWorker...\n");
+      _pWorkerArray[i] = new MultiballLampShowWorker(this, false);
+      break;
 
-  case LampShow::Sequence::BallPlunged:
-    break;
+    case LampShow::Sequence::BallPlunged:
+      break;
 
-  case LampShow::Sequence::Jackpot:
-    break;
+    case LampShow::Sequence::Jackpot:
+      break;
 
-  case LampShow::Sequence::SuperJackpot:
-    break;
+    case LampShow::Sequence::SuperJackpot:
+      break;
   }
 }
 
