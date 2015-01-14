@@ -47,11 +47,11 @@
 			<Add option="-Os" />
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
-			<Add option="-mlmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
+			<Add option="-mcmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
 			<Add directory="../lib" />
 		</Compiler>
 		<Linker>
-			<Add option="-Os -Wall -mlmm -m32bit-doubles -fno-exceptions -fno-rtti" />
+			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti" />
 			<Add directory="../lib" />
 		</Linker>
 		<Unit filename="../../../../../../PropGCC/lib/Util/c++-alloc.cpp" />
