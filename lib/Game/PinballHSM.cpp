@@ -15,7 +15,10 @@ void PinballHSM::init() {
   this->setCurrentState(inOperationState);
 }
 
-void PinballHSM::onBumper1SwitchClosed() {}
+void PinballHSM::onBumper1SwitchClosed() {
+  // Call the current state method.
+  // this->getCurrentState()->onBumper1SwitchClosed();
+}
 
 void PinballHSM::onBumper1SwitchOpened() {}
 

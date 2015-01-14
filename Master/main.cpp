@@ -46,6 +46,10 @@ std::map<uint8_t, MFP> fMap;
 PinballHSM game;
 
 // Playfield objects:
+// The objects directly react on the state of the assigned input port and
+// use the configured output port. Counting points will not be done by these
+// playfield objects. This is done in the main game loop by using the
+// function map.
 AutonomousKicker bumper1((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[0], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[0], 30);
 AutonomousKicker bumper2((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[1], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[1], 30);
 AutonomousKicker bumper3((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[2], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[2], 30);
