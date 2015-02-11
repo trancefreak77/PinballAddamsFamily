@@ -36,6 +36,8 @@ static _COGMEM unsigned int startCnt;
 static _COGMEM unsigned int endCnt;
 static _COGMEM uint32_t shiftOutEndMask;
 static _COGMEM uint8_t byteValue;
+static _COGMEM uint8_t _lightMatrixColumn;
+static _COGMEM uint8_t _lightMatrixRow;
 
 
 /*
@@ -248,20 +250,26 @@ int main(ioDriverMailbox_t *m) {
 
     // Handle Max7221: Create light column/rows
     byteValue = 0;
-    for (i = 1; i < 65; i++) {
-      if (m->lampState[i - 1] > 0) {
-        byteValue |= 1u << ((i - 1) % 8);
+    _lightMatrixRow = 1;    // Initialize for row 1.
+    _lightMatrixColumn = 0; // Initialize for column 1.
+    for (i = 0; i < 65; i++) {
+      if (m->lampState[i] > 0) {
+        byteValue |= 1u << _lightMatrixColumn;
       }
 
-      if (i % 8 == 0) {
+      if (_lightMatrixColumn == 7) {
         // Row complete.
-        value = (((((i - 1) / 8) + 1) << 8) | byteValue) << 16;
+        value = ((_lightMatrixRow << 8) | byteValue) << 16;
         OUTA &= ~MAX_7221_CHIP_SELECT_PIN_MASK;
         //waitcnt(10 + CNT);
         shiftOutInt(value, MAX_7221_DATA_PIN_MASK, 16);
         OUTA |= MAX_7221_CHIP_SELECT_PIN_MASK;
         //waitcnt(10 + CNT);
+        _lightMatrixColumn = 0;
+        _lightMatrixRow++;
       }
+      
+      _lightMatrixColumn++;
     }
 
     endCnt = CNT;
