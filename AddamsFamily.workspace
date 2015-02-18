@@ -2,8 +2,8 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="Master/AddamsFamilyPinballMaster.cbp">
-			<Depends filename="Master/CogC_Drivers/IODriver/TemplateMCogDriverProject.cbp" />
+			<Depends filename="Master/CogC_Drivers/IODriver/IODriverProject.cbp" />
 		</Project>
-		<Project filename="Master/CogC_Drivers/IODriver/TemplateMCogDriverProject.cbp" />
+		<Project filename="Master/CogC_Drivers/IODriver/IODriverProject.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

@@ -50,14 +50,14 @@ PinballHSM game;
 // use the configured output port. Counting points will not be done by these
 // playfield objects. This is done in the main game loop by using the
 // function map.
-AutonomousKicker bumper1((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[0], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[0], 30);
-AutonomousKicker bumper2((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[1], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[1], 30);
-AutonomousKicker bumper3((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[2], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[2], 30);
-AutonomousKicker bumper4((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[3], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[3], 30);
-AutonomousKicker bumper5((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[4], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[4], 30);
-//
-AutonomousKicker slingshotLeft((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[5], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[5], 30);
-AutonomousKicker slingshotRight((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[6], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[6], 30);
+//AutonomousKicker bumper1((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[0], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[0], 30);
+//AutonomousKicker bumper2((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[1], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[1], 30);
+//AutonomousKicker bumper3((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[2], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[2], 30);
+//AutonomousKicker bumper4((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[3], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[3], 30);
+//AutonomousKicker bumper5((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[4], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[4], 30);
+////
+//AutonomousKicker slingshotLeft((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[5], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[5], 30);
+//AutonomousKicker slingshotRight((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[6], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[6], 30);
 
 LampShow lampShow((uint8_t *)ioDriverPar.ioDriverMailbox.lampState, (uint8_t *)ioDriverPar.ioDriverMailbox.outputPort);
 
@@ -87,8 +87,8 @@ int main (void) {
   waitcnt(CLKFREQ + CNT);
 
   game.init();
-  slingshotLeft.setNextActivationDeltaMs(40);
-  slingshotRight.setNextActivationDeltaMs(40);
+//  slingshotLeft.setNextActivationDeltaMs(40);
+//  slingshotRight.setNextActivationDeltaMs(40);
 
   initializeEventNotificationMap();
   initializeScheduler();
@@ -99,7 +99,10 @@ int main (void) {
     previousSwitchInpurtPort[i] = 2;
   }
 
+  int startCnt = CNT;
+  int endCnt = CNT;
   while (1) {
+    startCnt = CNT;
     // Schedule tasks.
     schedulerRegistry.schedule();
 
@@ -121,20 +124,26 @@ int main (void) {
         functionMapLookupKey |= 128;    // Means switch is closed (active).
       }
 
-      MFP fp = fMap[functionMapLookupKey];
-      (game.*fp)();
+      // Enable the following two lines if all
+      // 64 destination entries are done into fMap!
+//      MFP fp = fMap[functionMapLookupKey];
+//      (game.*fp)();
     }
+
+    endCnt = CNT;
+//    printf("Loop took %d ticks...\n", endCnt - startCnt);
+//    waitcnt(20000000 + CNT);
   }
 }
 
 void initializeScheduler() {
-  schedulerRegistry.addScheduler(bumper1, 5);
-  schedulerRegistry.addScheduler(bumper2, 5);
-  schedulerRegistry.addScheduler(bumper3, 5);
-  schedulerRegistry.addScheduler(bumper4, 5);
-  schedulerRegistry.addScheduler(bumper5, 5);
-  schedulerRegistry.addScheduler(slingshotLeft, 5);
-  schedulerRegistry.addScheduler(slingshotRight, 5);
+//  schedulerRegistry.addScheduler(bumper1, 5);
+//  schedulerRegistry.addScheduler(bumper2, 5);
+//  schedulerRegistry.addScheduler(bumper3, 5);
+//  schedulerRegistry.addScheduler(bumper4, 5);
+//  schedulerRegistry.addScheduler(bumper5, 5);
+//  schedulerRegistry.addScheduler(slingshotLeft, 5);
+//  schedulerRegistry.addScheduler(slingshotRight, 5);
   schedulerRegistry.addScheduler(lampShow, 33);
 }
 

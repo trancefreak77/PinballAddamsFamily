@@ -268,7 +268,7 @@ int main(ioDriverMailbox_t *m) {
         _lightMatrixColumn = 0;
         _lightMatrixRow++;
       }
-      
+
       _lightMatrixColumn++;
     }
 
