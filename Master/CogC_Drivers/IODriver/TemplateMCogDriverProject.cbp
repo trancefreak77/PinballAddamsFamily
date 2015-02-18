@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="MasterIODriver" />
+		<Option pch_mode="2" />
+		<Option compiler="propeller_gcc_compiler_cogc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/IODriver.cog" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="propeller_gcc_compiler_cogc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/IODriver.cog" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="propeller_gcc_compiler_cogc" />
+			</Target>
+		</Build>
+		<ExtraCommands>
+			<Add after="propeller-elf-objcopy --localize-text --rename-section .text=$(TARGET_OUTPUT_BASENAME).cog $(TARGET_OUTPUT_FILE)" />
+		</ExtraCommands>
+		<Unit filename="IODriver.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="IODriverMailbox.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

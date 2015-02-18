@@ -8,7 +8,7 @@
 #include "Game\PinballHSM.h"
 #include "Lamps\LampShow.h"
 #include "Domain\PlayfieldSwitchEnum.h"
-#include "IODriverMailbox.h"
+#include "CogC_Drivers\IODriver\IODriverMailbox.h"
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
