@@ -24,6 +24,10 @@
 #define SHIFT_IN_LATCH_PIN_MASK			  (1u << SHIFT_IN_LATCH_PIN)
 #define CLOCK_PIN_MASK					      (1u << CLOCK_PIN)
 
+#define WAIT_TICKS_ONE_MS 80000               //    1 ms
+#define KICKER_ACTIVATION_TICKS (WAIT_TICKS_ONE_MS * 20)
+#define KICKER_DEAD_TICKS (WAIT_TICKS_ONE_MS * 40)
+
 static _COGMEM unsigned int shiftedInValue;
 static _COGMEM unsigned int value;
 static _COGMEM unsigned int mask;
@@ -38,7 +42,25 @@ static _COGMEM uint32_t shiftOutEndMask;
 static _COGMEM uint8_t byteValue;
 static _COGMEM uint8_t _lightMatrixColumn;
 static _COGMEM uint8_t _lightMatrixRow;
+static _COGMEM uint8_t _inputPortNumber;
+static _COGMEM uint8_t _outputPortNumber;
+static const _COGMEM uint32_t MAX_COUNTER_VALUE = 4294967295u;
 
+
+/*
+ * Returns the delta ticks between a given
+ * start and end cnt value.
+ * param startValue = start CNT value
+ * param endValue = end CNT value
+ */
+_NATIVE
+uint32_t counterDiff(uint32_t startValue, uint32_t endValue) {
+  if (endValue > startValue) {
+    return (endValue - startValue);
+  }
+
+  return (MAX_COUNTER_VALUE - startValue + endValue);
+}
 
 /*
  * Set a pin high without affecting other pins.
@@ -169,6 +191,38 @@ void initMax7221() {
   }
 }
 
+_NATIVE
+void updateKickerObjects(ioDriverMailbox_t *m) {
+  for (i = 0; i < 10; i++) {
+    _inputPortNumber = m->kickerToInputPortMapping[i];
+    _outputPortNumber = m->kickerToOutputPortMapping[i];
+
+    if (m->inputPort[_inputPortNumber] > 0 && !(m->isKickerCoilActive[i])) {
+      // Bumper is not active but it should be.
+      // Check if bumper can be activated and the
+      // register dead time is elapsed.
+      if (counterDiff(m->kickerActivationCnt[i], CNT) < KICKER_DEAD_TICKS) {
+        // Kicker must not be enabled again.
+        return;
+      }
+
+      // Activate coil output port.
+      m->isKickerCoilActive[i] = true;
+      m->kickerActivationCnt[i] = CNT;
+      m->outputPort[_outputPortNumber] = 1;
+      return;
+    }
+
+    // If bumper is active but activation time is
+    // elapsed, deactivate it.
+    if (m->isKickerCoilActive[i] && counterDiff(m->kickerActivationCnt[i], CNT) > KICKER_ACTIVATION_TICKS) {
+      m->isKickerCoilActive[i] = false;
+      m->outputPort[_outputPortNumber] = 0;
+      return;
+    }
+  }
+}
+
 _NAKED
 int main(ioDriverMailbox_t *m) {
   // Setup all pin modes
@@ -272,6 +326,7 @@ int main(ioDriverMailbox_t *m) {
       _lightMatrixColumn++;
     }
 
+    updateKickerObjects(m);
     endCnt = CNT;
     m->loopTicks = endCnt - startCnt;
   }

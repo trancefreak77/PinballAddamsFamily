@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
+	<File name="..\lib\Lamps\LampShowWorker.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="278" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Lamps\MultiballLampShowWorker.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="608" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Lamps\MultiballLampShowWorker.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="225" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Timer\CounterSpan.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="414" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Timer\PauseTimer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="227" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3703" topLine="90" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\..\..\..\..\..\PropGCC\lib\Util\c++-alloc.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="225" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\OutputActivator.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="764" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\ModelBase.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="50" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\OutputActivator.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="202" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\AutonomousKicker.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="918" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\Scheduler.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="294" topLine="12" />
+		</Cursor>
+	</File>
 	<File name="..\lib\Domain\Scheduler.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="246" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\AutonomousKicker.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="335" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="..\lib\Domain\SchedulerRegistry.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -11,9 +76,19 @@
 			<Cursor1 position="356" topLine="7" />
 		</Cursor>
 	</File>
+	<File name="..\lib\Domain\OneTimeHitCounter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="128" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="..\lib\Domain\SchedulerRegistry.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="295" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\lib\Domain\OneTimeHitCounter.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="251" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="..\lib\Game\EventMessage.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -41,99 +116,24 @@
 			<Cursor1 position="639" topLine="3" />
 		</Cursor>
 	</File>
-	<File name="..\lib\Domain\OutputActivator.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="764" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Domain\OneTimeHitCounter.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="251" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="..\lib\Game\StateBase.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="88" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="..\lib\Domain\OneTimeHitCounter.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="128" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="..\lib\Lamps\LampShow.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2143" topLine="59" />
+			<Cursor1 position="2143" topLine="54" />
 		</Cursor>
 	</File>
 	<File name="..\lib\Lamps\LampShow.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="384" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Domain\ModelBase.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="50" topLine="0" />
+			<Cursor1 position="384" topLine="1" />
 		</Cursor>
 	</File>
 	<File name="..\lib\Lamps\LampShowWorker.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="19" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Domain\AutonomousKicker.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="335" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Lamps\LampShowWorker.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="278" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Domain\AutonomousKicker.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="918" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Lamps\MultiballLampShowWorker.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="608" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\..\..\..\..\..\PropGCC\lib\Util\c++-alloc.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="225" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Lamps\MultiballLampShowWorker.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="225" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Timer\CounterSpan.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="414" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Timer\PauseTimer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="227" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4845" topLine="78" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Domain\OutputActivator.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="202" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\lib\Domain\Scheduler.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="294" topLine="12" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
