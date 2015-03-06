@@ -3,8 +3,7 @@
 
 #include "LampShowWorker.h"
 
-class MultiballLampShowWorker : public LampShowWorker
-{
+class MultiballLampShowWorker : public LampShowWorker {
   public:
     MultiballLampShowWorker(LampShow *pParentLampShow, bool shouldLoop);
     virtual ~MultiballLampShowWorker();

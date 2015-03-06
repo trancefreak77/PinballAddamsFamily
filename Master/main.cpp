@@ -115,7 +115,10 @@ int main (void) {
 
       // Switch state changed, notify game state machine.
       previousSwitchInpurtPort[i] = ioDriverPar.ioDriverMailbox.inputPort[i];
-      PlayfieldSwitch playfieldSwitch = (PlayfieldSwitch) i;
+
+      // The playfield switch enum object is not needed here.
+      // Anyways, leave the code for reference here.
+      // PlayfieldSwitch playfieldSwitch = (PlayfieldSwitch) i;
 
       uint8_t functionMapLookupKey = i;
       if (ioDriverPar.ioDriverMailbox.inputPort[i] == 0) {
@@ -124,10 +127,13 @@ int main (void) {
         functionMapLookupKey |= 128;    // Means switch is closed (active).
       }
 
-      // Enable the following two lines if all
-      // 64 destination entries are done into fMap!
-//      MFP fp = fMap[functionMapLookupKey];
-//      (game.*fp)();
+      // Check if the key exists in the function map.
+      // If the key (the number of the switch) is found,
+      // call the target function.
+      if (fMap.count(functionMapLookupKey) > 0) {
+        MFP fp = fMap[functionMapLookupKey];
+        (game.*fp)();
+      }
     }
 
     endCnt = CNT;
@@ -144,7 +150,7 @@ void initializeScheduler() {
 //  schedulerRegistry.addScheduler(bumper5, 5);
 //  schedulerRegistry.addScheduler(slingshotLeft, 5);
 //  schedulerRegistry.addScheduler(slingshotRight, 5);
-  schedulerRegistry.addScheduler(lampShow, 33);
+  schedulerRegistry.addScheduler(lampShow, 31);
 }
 
 void initializeEventNotificationMap() {

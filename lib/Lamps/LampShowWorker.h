@@ -2,6 +2,9 @@
 #define LAMPSHOWWORKER_H
 
 #include "LampShow.h"
+#include <stdint.h>
+#include <map>
+
 class LampShow;
 
 class LampShowWorker {
@@ -10,8 +13,10 @@ class LampShowWorker {
     ~LampShowWorker();
     virtual void schedule();
     virtual bool getShouldLoop();
+    std::map<uint8_t, bool>& getUnusedLampNumbers();
   protected:
     LampShow *_pParentLampShow;
+    std::map<uint8_t, bool> _unusedLampsMap;
   private:
     bool _shouldLoop;
 };
