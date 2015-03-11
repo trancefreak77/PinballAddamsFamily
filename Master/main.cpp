@@ -1,6 +1,6 @@
 #include <propeller.h>
 #include <stdlib.h>
-#include <stdio.h>
+// #include <stdio.h>
 #include <stdint.h>
 #include <map>
 #include "Domain\SchedulerRegistry.h"
@@ -9,20 +9,21 @@
 #include "Lamps\LampShow.h"
 #include "Domain\PlayfieldSwitchEnum.h"
 #include "CogC_Drivers\IODriver\IODriverMailbox.h"
-#include "libpropeller\sd\sd.h"
+// #include "libpropeller\sd\sd.h"
+#include "libpropeller\serial\serial.h"
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
 }
 
-extern _Driver _SimpleSerialDriver;
+// extern _Driver _SimpleSerialDriver;
 // extern _Driver _FileDriver;
 
-_Driver *_driverlist[] = {
-  &_SimpleSerialDriver,
-  // &_FileDriver,
-  NULL
-};
+//_Driver *_driverlist[] = {
+//  &_SimpleSerialDriver,
+//  // &_FileDriver,
+//  NULL
+//};
 
 /*
  * This is the structure which we'll pass to the C cog.
@@ -61,8 +62,20 @@ PinballHSM game;
 //AutonomousKicker slingshotRight((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[6], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[6], 30);
 
 LampShow lampShow((uint8_t *)ioDriverPar.ioDriverMailbox.lampState, (uint8_t *)ioDriverPar.ioDriverMailbox.outputPort);
-
 SchedulerRegistry schedulerRegistry;
+
+// Define and create SD card object
+//const int kDoPin = 10;
+//const int kClkPin = 11;
+//const int kDiPin = 12;
+//const int kCsPin = 13;
+//libpropeller::SD sut;
+
+// Define and create serial object
+const int rxpin = 18;
+const int txpin = 19;
+const int baud = 460800;
+libpropeller::Serial sut;
 
 /*
  * Function to start up a new cog running the IO driver
@@ -86,6 +99,14 @@ int main (void) {
 
   // Initialize ports with test data.
   waitcnt(CLKFREQ + CNT);
+
+  // FOR TESTING ONLY! USE SD CARD
+//  sut.ClearError();
+//  sut.Mount(kDoPin, kClkPin, kDiPin, kCsPin);
+
+  // FOR TESTING ONLY! USE SERIAL OBJECT
+  sut.Start(rxpin, txpin, baud);
+  sut.Put("Hallo!");
 
   game.init();
 //  slingshotLeft.setNextActivationDeltaMs(40);
