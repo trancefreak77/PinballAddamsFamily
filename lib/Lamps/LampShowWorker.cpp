@@ -14,3 +14,7 @@ void LampShowWorker::schedule() {}
 bool LampShowWorker::getShouldLoop() {
   return _shouldLoop;
 }
+
+std::map<uint8_t, bool>& LampShowWorker::getUnusedLampNumbers() {
+  return _unusedLampsMap;
+}

@@ -1,8 +1,11 @@
 #ifndef LAMPSHOW_H
 #define LAMPSHOW_H
+#define MAX_WORKERS 3
 
 #include "Domain\Scheduler.h"
 #include "LampShowWorker.h"
+#include <map>
+
 class LampShowWorker;
 
 class LampShow : public Scheduler {
@@ -27,6 +30,7 @@ class LampShow : public Scheduler {
     LampShowWorker *_pWorkerArray[3];
     uint8_t *_pLampState;
     uint8_t *_pOutputPort;
+    std::map<uint8_t, bool> _unusedLampsMap;
 };
 
 #endif // LAMPSHOW_H
