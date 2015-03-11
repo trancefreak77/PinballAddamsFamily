@@ -46,6 +46,13 @@ static _COGMEM uint8_t _inputPortNumber;
 static _COGMEM uint8_t _outputPortNumber;
 static const _COGMEM uint32_t MAX_COUNTER_VALUE = 4294967295u;
 
+static HUBDATA struct {
+    uint8_t kickerToInputPortMapping[10];   // Kicker number to input port mapping.
+    uint8_t kickerToOutputPortMapping[10];  // Kicker number to output port mapping.
+    bool isKickerCoilActive[10];            // Is the coil of a kicker currently actuating.
+    uint32_t kickerActivationCnt[10];       // Clock count when a kicker coil was activated.
+} kickerBuffer;
+
 
 /*
  * Returns the delta ticks between a given
@@ -194,29 +201,29 @@ void initMax7221() {
 _NATIVE
 void updateKickerObjects(ioDriverMailbox_t *m) {
   for (i = 0; i < 10; i++) {
-    _inputPortNumber = m->kickerToInputPortMapping[i];
-    _outputPortNumber = m->kickerToOutputPortMapping[i];
+    _inputPortNumber = kickerBuffer.kickerToInputPortMapping[i];
+    _outputPortNumber = kickerBuffer.kickerToOutputPortMapping[i];
 
-    if (m->inputPort[_inputPortNumber] > 0 && !(m->isKickerCoilActive[i])) {
+    if (m->inputPort[_inputPortNumber] > 0 && !(kickerBuffer.isKickerCoilActive[i])) {
       // Bumper is not active but it should be.
       // Check if bumper can be activated and the
       // register dead time is elapsed.
-      if (counterDiff(m->kickerActivationCnt[i], CNT) < KICKER_DEAD_TICKS) {
+      if (counterDiff(kickerBuffer.kickerActivationCnt[i], CNT) < KICKER_DEAD_TICKS) {
         // Kicker must not be enabled again.
         return;
       }
 
       // Activate coil output port.
-      m->isKickerCoilActive[i] = true;
-      m->kickerActivationCnt[i] = CNT;
+      kickerBuffer.isKickerCoilActive[i] = true;
+      kickerBuffer.kickerActivationCnt[i] = CNT;
       m->outputPort[_outputPortNumber] = 1;
       return;
     }
 
     // If bumper is active but activation time is
     // elapsed, deactivate it.
-    if (m->isKickerCoilActive[i] && counterDiff(m->kickerActivationCnt[i], CNT) > KICKER_ACTIVATION_TICKS) {
-      m->isKickerCoilActive[i] = false;
+    if (kickerBuffer.isKickerCoilActive[i] && counterDiff(kickerBuffer.kickerActivationCnt[i], CNT) > KICKER_ACTIVATION_TICKS) {
+      kickerBuffer.isKickerCoilActive[i] = false;
       m->outputPort[_outputPortNumber] = 0;
       return;
     }

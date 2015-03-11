@@ -29,15 +29,14 @@
 			<Add option="-Os" />
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
-			<Add option="-mcmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
+			<Add option="-mlmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
 			<Add directory="../lib" />
 		</Compiler>
 		<Linker>
-			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti" />
+			<Add option="-Os -Wall -mlmm -m32bit-doubles -fno-exceptions -fno-rtti" />
 			<Add library="CogC_Drivers\IODriver\bin\Release\IODriver.cog" />
 			<Add directory="../lib" />
 		</Linker>
-		<Unit filename="../../../../../../../../PropGCC/lib/Util/c++-alloc.cpp" />
 		<Unit filename="../lib/Domain/AutonomousKicker.cpp" />
 		<Unit filename="../lib/Domain/AutonomousKicker.h" />
 		<Unit filename="../lib/Domain/ModelBase.cpp" />
@@ -70,6 +69,7 @@
 		<Unit filename="../lib/Timer/CounterSpan.h" />
 		<Unit filename="../lib/Timer/PauseTimer.cpp" />
 		<Unit filename="../lib/Timer/PauseTimer.h" />
+		<Unit filename="../lib/Util/c++-alloc.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

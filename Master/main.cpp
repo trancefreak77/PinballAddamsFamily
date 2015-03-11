@@ -9,6 +9,7 @@
 #include "Lamps\LampShow.h"
 #include "Domain\PlayfieldSwitchEnum.h"
 #include "CogC_Drivers\IODriver\IODriverMailbox.h"
+#include "libpropeller\sd\sd.h"
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
@@ -115,7 +116,9 @@ int main (void) {
 
       // Switch state changed, notify game state machine.
       previousSwitchInpurtPort[i] = ioDriverPar.ioDriverMailbox.inputPort[i];
-      PlayfieldSwitch playfieldSwitch = (PlayfieldSwitch) i;
+
+      // Currently not used.
+      // PlayfieldSwitch playfieldSwitch = (PlayfieldSwitch) i;
 
       uint8_t functionMapLookupKey = i;
       if (ioDriverPar.ioDriverMailbox.inputPort[i] == 0) {
@@ -197,6 +200,9 @@ void initializeEventNotificationMap() {
 
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper5Switch)             | 0,   &PinballHSM::onBumper5SwitchOpened));
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper5Switch)             | 128, &PinballHSM::onBumper5SwitchClosed));
+
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 0,   &PinballHSM::onLeftFlipperButtonSwitchOpened));
+  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 128, &PinballHSM::onLeftFlipperButtonSwitchClosed));
 
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 0,   &PinballHSM::onLeftFlipperButtonSwitchOpened));
   fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 128, &PinballHSM::onLeftFlipperButtonSwitchClosed));
