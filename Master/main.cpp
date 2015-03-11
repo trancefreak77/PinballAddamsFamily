@@ -1,6 +1,6 @@
 #include <propeller.h>
 #include <stdlib.h>
-// #include <stdio.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <map>
 #include "Domain\SchedulerRegistry.h"
@@ -16,7 +16,7 @@ extern "C" void __cxa_pure_virtual() {
   while (1);
 }
 
-// extern _Driver _SimpleSerialDriver;
+//extern _Driver _SimpleSerialDriver;
 // extern _Driver _FileDriver;
 
 //_Driver *_driverlist[] = {
@@ -72,10 +72,10 @@ SchedulerRegistry schedulerRegistry;
 //libpropeller::SD sut;
 
 // Define and create serial object
-const int rxpin = 18;
-const int txpin = 19;
-const int baud = 460800;
-libpropeller::Serial sut;
+const int rxpin = 31;
+const int txpin = 30;
+const int baud = 115200; // 460800;
+libpropeller::Serial serial;
 
 /*
  * Function to start up a new cog running the IO driver
@@ -101,12 +101,11 @@ int main (void) {
   waitcnt(CLKFREQ + CNT);
 
   // FOR TESTING ONLY! USE SD CARD
-//  sut.ClearError();
-//  sut.Mount(kDoPin, kClkPin, kDiPin, kCsPin);
+  // sut.ClearError();
+  // sut.Mount(kDoPin, kClkPin, kDiPin, kCsPin);
 
   // FOR TESTING ONLY! USE SERIAL OBJECT
-  sut.Start(rxpin, txpin, baud);
-  sut.Put("Hallo!");
+  serial.Start(rxpin, txpin, baud);
 
   game.init();
 //  slingshotLeft.setNextActivationDeltaMs(40);
@@ -123,7 +122,10 @@ int main (void) {
 
   int startCnt = CNT;
   int endCnt = CNT;
+  char stringBuffer[50];
+
   while (1) {
+    // serial.Put("Test!\n");
     startCnt = CNT;
     // Schedule tasks.
     schedulerRegistry.schedule();
@@ -159,6 +161,9 @@ int main (void) {
     }
 
     endCnt = CNT;
+    sprintf(stringBuffer, "Loop took: %d\n", (endCnt - startCnt));
+    serial.Put(stringBuffer);
+    waitcnt((CLKFREQ / 4) + CNT);
 //    printf("Loop took %d ticks...\n", endCnt - startCnt);
 //    waitcnt(20000000 + CNT);
   }

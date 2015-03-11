@@ -28,18 +28,14 @@
 		<Compiler>
 			<Add option="-Os" />
 			<Add option="-Wall" />
-			<Add option="-mcmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache -fno-default-inline -std=gnu++0x -fno-strict-aliasing -fpermissive" />
+			<Add option="-mcmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
 			<Add directory="../lib" />
-			<Add directory="C:/PropGCC/lib" />
 		</Compiler>
 		<Linker>
 			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti" />
 			<Add library="CogC_Drivers\IODriver\bin\Release\IODriver.cog" />
 			<Add directory="../lib" />
-			<Add directory="C:/PropGCC/lib" />
 		</Linker>
-		<Unit filename="../../../../../../../../PropGCC/lib/libpropeller/serial/serial.S" />
-		<Unit filename="../../../../../../../../PropGCC/lib/libpropeller/serial/serial.h" />
 		<Unit filename="../lib/Domain/AutonomousKicker.cpp" />
 		<Unit filename="../lib/Domain/AutonomousKicker.h" />
 		<Unit filename="../lib/Domain/ModelBase.cpp" />
@@ -73,6 +69,8 @@
 		<Unit filename="../lib/Timer/PauseTimer.cpp" />
 		<Unit filename="../lib/Timer/PauseTimer.h" />
 		<Unit filename="../lib/Util/c++-alloc.cpp" />
+		<Unit filename="../lib/libpropeller/serial/serial.S" />
+		<Unit filename="../lib/libpropeller/serial/serial.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
