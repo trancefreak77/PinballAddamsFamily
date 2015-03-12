@@ -1,6 +1,6 @@
 #include "LampShow.h"
 #include "MultiballLampShowWorker.h"
-#include <stdio.h>
+// #include <stdio.h>
 #include <propeller.h>
 #include <stdint.h>
 
@@ -26,15 +26,15 @@ void LampShow::finishedLampShow(LampShowWorker *lampShowWorker) {
       _pWorkerArray[i] = nullptr;
 
       // Re-fetch all unused lamps from all workers.
-      _unusedLampsMap.clear();
-      for (uint8_t i = 0; i < MAX_WORKERS; i++) {
-        if (_pWorkerArray[i] != nullptr) {
-          std::map<uint8_t, bool> unusedWorkerLamps = _pWorkerArray[i]->getUnusedLampNumbers();
-          for (std::map<uint8_t, bool>::const_iterator iter = unusedWorkerLamps.begin(); iter != unusedWorkerLamps.end(); ++iter) {
-            _unusedLampsMap.insert(std::make_pair(((uint8_t) iter->first), true));
-          }
-        }
-      }
+//      _unusedLampsMap.clear();
+//      for (uint8_t i = 0; i < MAX_WORKERS; i++) {
+//        if (_pWorkerArray[i] != nullptr) {
+//          std::map<uint8_t, bool> unusedWorkerLamps = _pWorkerArray[i]->getUnusedLampNumbers();
+//          for (std::map<uint8_t, bool>::const_iterator iter = unusedWorkerLamps.begin(); iter != unusedWorkerLamps.end(); ++iter) {
+//            _unusedLampsMap.insert(std::make_pair(((uint8_t) iter->first), true));
+//          }
+//        }
+//      }
     }
   }
 }
@@ -73,7 +73,7 @@ void LampShow::playLampShow(Sequence sequence) {
   switch (sequence) {
     case LampShow::Sequence::Multiball:
       //printf("Creating new multiball lampShowWorker...\n");
-      _pWorkerArray[i] = new MultiballLampShowWorker(this, false);
+      _pWorkerArray[i] = new MultiballLampShowWorker(this, true);
       break;
 
     case LampShow::Sequence::BallPlunged:
@@ -88,9 +88,9 @@ void LampShow::playLampShow(Sequence sequence) {
 
   // Now update all unused lamps from the lampShow.
   std::map<uint8_t, bool> unusedWorkerLamps = _pWorkerArray[i]->getUnusedLampNumbers();
-  for (std::map<uint8_t, bool>::const_iterator iter = unusedWorkerLamps.begin(); iter != unusedWorkerLamps.end(); ++iter) {
-    _unusedLampsMap.insert(std::make_pair(((uint8_t) iter->first), true));
-  }
+//  for (std::map<uint8_t, bool>::const_iterator iter = unusedWorkerLamps.begin(); iter != unusedWorkerLamps.end(); ++iter) {
+//    _unusedLampsMap.insert(std::make_pair(((uint8_t) iter->first), true));
+//  }
 }
 
 uint8_t *LampShow::getLampStateArray() {

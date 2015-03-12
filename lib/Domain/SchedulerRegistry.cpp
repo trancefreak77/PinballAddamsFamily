@@ -1,6 +1,7 @@
 #include "SchedulerRegistry.h"
 #include <propeller.h>
 #include <stdint.h>
+// #include <stdio.h>
 
 SchedulerRegistry::SchedulerRegistry() {
   _schedulersInList = 0;
@@ -26,6 +27,7 @@ void SchedulerRegistry::addScheduler (Scheduler &scheduler, uint16_t updateInter
 void SchedulerRegistry::schedule() {
   for (uint8_t i = 0; i < _schedulersInList; i++) {
     if (_pSchedulers[i]->shouldSchedule()) {
+      // printf("SchedulerRegistry::schedule, we should schedule...\n");
       _pSchedulers[i]->schedule();
     }
   }

@@ -32,7 +32,7 @@
 			<Add directory="../lib" />
 		</Compiler>
 		<Linker>
-			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti" />
+			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti -mfcache" />
 			<Add library="CogC_Drivers\IODriver\bin\Release\IODriver.cog" />
 			<Add directory="../lib" />
 		</Linker>
@@ -69,6 +69,7 @@
 		<Unit filename="../lib/Timer/PauseTimer.cpp" />
 		<Unit filename="../lib/Timer/PauseTimer.h" />
 		<Unit filename="../lib/Util/c++-alloc.cpp" />
+		<Unit filename="../lib/libpropeller/numbers/numbers.cpp" />
 		<Unit filename="../lib/libpropeller/serial/serial.S" />
 		<Unit filename="../lib/libpropeller/serial/serial.h" />
 		<Unit filename="main.cpp" />

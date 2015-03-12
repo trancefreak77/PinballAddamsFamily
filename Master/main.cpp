@@ -2,28 +2,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <map>
-#include "Domain\SchedulerRegistry.h"
-#include "Domain\AutonomousKicker.h"
 #include "Game\PinballHSM.h"
+#include "Domain\SchedulerRegistry.h"
 #include "Lamps\LampShow.h"
 #include "Domain\PlayfieldSwitchEnum.h"
 #include "CogC_Drivers\IODriver\IODriverMailbox.h"
-// #include "libpropeller\sd\sd.h"
 #include "libpropeller\serial\serial.h"
+#include "libpropeller\sd\sd.h"
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
 }
-
-//extern _Driver _SimpleSerialDriver;
-// extern _Driver _FileDriver;
-
-//_Driver *_driverlist[] = {
-//  &_SimpleSerialDriver,
-//  // &_FileDriver,
-//  NULL
-//};
 
 /*
  * This is the structure which we'll pass to the C cog.
@@ -36,46 +25,31 @@ HUBDATA static struct {
     volatile ioDriverMailbox_t ioDriverMailbox;
 } ioDriverPar;
 
-
-// Forward declaration.
-void initializeScheduler();
-void initializeEventNotificationMap();
-
-// Define member function pointer map.
-typedef void (PinballHSM::*MFP)();
-std::map<uint8_t, MFP> fMap;
-
-PinballHSM game;
-
-// Playfield objects:
-// The objects directly react on the state of the assigned input port and
-// use the configured output port. Counting points will not be done by these
-// playfield objects. This is done in the main game loop by using the
-// function map.
-//AutonomousKicker bumper1((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[0], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[0], 30);
-//AutonomousKicker bumper2((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[1], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[1], 30);
-//AutonomousKicker bumper3((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[2], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[2], 30);
-//AutonomousKicker bumper4((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[3], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[3], 30);
-//AutonomousKicker bumper5((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[4], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[4], 30);
-////
-//AutonomousKicker slingshotLeft((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[5], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[5], 30);
-//AutonomousKicker slingshotRight((uint8_t &)ioDriverPar.ioDriverMailbox.outputPort[6], (uint8_t &)ioDriverPar.ioDriverMailbox.inputPort[6], 30);
-
-LampShow lampShow((uint8_t *)ioDriverPar.ioDriverMailbox.lampState, (uint8_t *)ioDriverPar.ioDriverMailbox.outputPort);
+// Global variables / objects
+uint8_t switchKey = 0;
+const uint8_t activated = 128;
+LampShow lampShow((uint8_t*) ioDriverPar.ioDriverMailbox.lampState, (uint8_t*) ioDriverPar.ioDriverMailbox.outputPort);
 SchedulerRegistry schedulerRegistry;
-
-// Define and create SD card object
-//const int kDoPin = 10;
-//const int kClkPin = 11;
-//const int kDiPin = 12;
-//const int kCsPin = 13;
-//libpropeller::SD sut;
+PinballHSM game;
 
 // Define and create serial object
 const int rxpin = 31;
 const int txpin = 30;
 const int baud = 115200; // 460800;
 libpropeller::Serial serial;
+
+// Define and create SD card object
+const int kDoPin = 10;
+const int kClkPin = 9;
+const int kDiPin = 8;
+const int kCsPin = 7;
+// libpropeller::SD sdObj;
+
+// Forward declaration.
+void initializeScheduler();
+void initializeEventNotificationMap();
+void handleSwitches(uint8_t);
+void playLampShow();
 
 /*
  * Function to start up a new cog running the IO driver
@@ -94,35 +68,34 @@ uint8_t startIODriver(volatile void *parptr) {
 }
 
 int main (void) {
-  // Start the IO driver cog.
-  startIODriver(&ioDriverPar.ioDriverMailbox);
-
-  // Initialize ports with test data.
-  waitcnt(CLKFREQ + CNT);
-
+  // Mount SD card
   // FOR TESTING ONLY! USE SD CARD
-  // sut.ClearError();
-  // sut.Mount(kDoPin, kClkPin, kDiPin, kCsPin);
+//  sdObj.ClearError();
+//  sdObj.Mount(kDoPin, kClkPin, kDiPin, kCsPin);
 
-  // FOR TESTING ONLY! USE SERIAL OBJECT
+  // Start the IO driver cog.
+  waitcnt((CLKFREQ / 4) + CNT);
+  // Initialize ports with test data.
   serial.Start(rxpin, txpin, baud);
+  waitcnt((CLKFREQ / 4) + CNT);
+
+  serial.PutFormatted("This is COGID: %d\n", cogid());
+  serial.PutFormatted("Starting DriverIO COGID: %d\n", startIODriver(&ioDriverPar.ioDriverMailbox));
+
+  waitcnt((CLKFREQ / 4) + CNT);
 
   game.init();
-//  slingshotLeft.setNextActivationDeltaMs(40);
-//  slingshotRight.setNextActivationDeltaMs(40);
-
-  initializeEventNotificationMap();
   initializeScheduler();
 
   uint8_t previousSwitchInpurtPort[64];
-  for (int i = 0; i < 64; i++) {
+  for (uint8_t loopCounter = 0; loopCounter < 64; loopCounter++) {
     // Initialize with value 2 which means, not closed and not open.
-    previousSwitchInpurtPort[i] = 2;
+    previousSwitchInpurtPort[loopCounter] = 1;
   }
 
   int startCnt = CNT;
   int endCnt = CNT;
-  char stringBuffer[50];
+  playLampShow();
 
   while (1) {
     // serial.Put("Test!\n");
@@ -131,7 +104,7 @@ int main (void) {
     schedulerRegistry.schedule();
 
     // Handle only switch change events.
-    for (int i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
       if (previousSwitchInpurtPort[i] == ioDriverPar.ioDriverMailbox.inputPort[i]) {
         // No change happened.
         continue;
@@ -139,105 +112,176 @@ int main (void) {
 
       // Switch state changed, notify game state machine.
       previousSwitchInpurtPort[i] = ioDriverPar.ioDriverMailbox.inputPort[i];
+      switchKey = i;
 
-      // The playfield switch enum object is not needed here.
-      // Anyways, leave the code for reference here.
-      // PlayfieldSwitch playfieldSwitch = (PlayfieldSwitch) i;
-
-      uint8_t functionMapLookupKey = i;
-      if (ioDriverPar.ioDriverMailbox.inputPort[i] == 0) {
-        functionMapLookupKey |= 0;      // Means switch is open (inactive).
-      } else {
-        functionMapLookupKey |= 128;    // Means switch is closed (active).
+      if (ioDriverPar.ioDriverMailbox.inputPort[i] > 0) {   // Switch is activated.
+        switchKey = i | activated;
       }
 
-      // Check if the key exists in the function map.
-      // If the key (the number of the switch) is found,
-      // call the target function.
-      if (fMap.count(functionMapLookupKey) > 0) {
-        MFP fp = fMap[functionMapLookupKey];
-        (game.*fp)();
-      }
+      // Now call the appropriate switch function.
+      handleSwitches(switchKey);
     }
 
     endCnt = CNT;
-    sprintf(stringBuffer, "Loop took: %d\n", (endCnt - startCnt));
-    serial.Put(stringBuffer);
+    // printf("Loop took: %d\n", (endCnt - startCnt));
+    serial.PutFormatted("Loop took: %d\n", (endCnt - startCnt));
     waitcnt((CLKFREQ / 4) + CNT);
-//    printf("Loop took %d ticks...\n", endCnt - startCnt);
-//    waitcnt(20000000 + CNT);
   }
 }
 
 void initializeScheduler() {
-//  schedulerRegistry.addScheduler(bumper1, 5);
-//  schedulerRegistry.addScheduler(bumper2, 5);
-//  schedulerRegistry.addScheduler(bumper3, 5);
-//  schedulerRegistry.addScheduler(bumper4, 5);
-//  schedulerRegistry.addScheduler(bumper5, 5);
-//  schedulerRegistry.addScheduler(slingshotLeft, 5);
-//  schedulerRegistry.addScheduler(slingshotRight, 5);
-  schedulerRegistry.addScheduler(lampShow, 31);
-}
-
-void initializeEventNotificationMap() {
-  // | 0   == Switch open and inactive
-  // | 128 == Switch closed and active
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLanePlungerSwitch)  | 0,   &PinballHSM::onShooterLanePlungerSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLanePlungerSwitch)  | 128, &PinballHSM::onShooterLanePlungerSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLaneRampSwitch)     | 0,   &PinballHSM::onShooterLaneRampSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ShooterLaneRampSwitch)     | 128, &PinballHSM::onShooterLaneRampSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopRightSwitch)      | 0,   &PinballHSM::onOuterLoopRightSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopRightSwitch)      | 128, &PinballHSM::onOuterLoopRightSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopLeftSwitch)       | 0,   &PinballHSM::onShooterLanePlungerSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::OuterLoopLeftSwitch)       | 128, &PinballHSM::onShooterLanePlungerSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingRampSwitch)           | 0,   &PinballHSM::onShooterLaneRampSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingRampSwitch)           | 128, &PinballHSM::onShooterLaneRampSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingHoleSwitch)           | 0,   &PinballHSM::onOuterLoopRightSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::ThingHoleSwitch)           | 128, &PinballHSM::onOuterLoopRightSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::FarLeftInlaneSwitch)       | 0,   &PinballHSM::onFarLeftInlaneSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::FarLeftInlaneSwitch)       | 128, &PinballHSM::onFarLeftInlaneSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftOutlaneSwitch)         | 0,   &PinballHSM::onLeftOutlaneSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftOutlaneSwitch)         | 128, &PinballHSM::onLeftOutlaneSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::InnerLeftInlaneSwitch)     | 0,   &PinballHSM::onLeftInnerInlaneSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::InnerLeftInlaneSwitch)     | 128, &PinballHSM::onLeftInnerInlaneSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightInlaneSwitch)         | 0,   &PinballHSM::onRightInlaneSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightInlaneSwitch)         | 128, &PinballHSM::onRightInlaneSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightOutlaneSwitch)        | 0,   &PinballHSM::onRightOutlaneSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::RightOutlaneSwitch)        | 128, &PinballHSM::onRightOutlaneSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper1Switch)             | 0,   &PinballHSM::onBumper1SwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper1Switch)             | 128, &PinballHSM::onBumper1SwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper2Switch)             | 0,   &PinballHSM::onBumper2SwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper2Switch)             | 128, &PinballHSM::onBumper2SwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper3Switch)             | 0,   &PinballHSM::onBumper3SwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper3Switch)             | 128, &PinballHSM::onBumper3SwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper4Switch)             | 0,   &PinballHSM::onBumper4SwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper4Switch)             | 128, &PinballHSM::onBumper4SwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper5Switch)             | 0,   &PinballHSM::onBumper5SwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::Bumper5Switch)             | 128, &PinballHSM::onBumper5SwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 0,   &PinballHSM::onLeftFlipperButtonSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 128, &PinballHSM::onLeftFlipperButtonSwitchClosed));
-
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 0,   &PinballHSM::onLeftFlipperButtonSwitchOpened));
-  fMap.insert(std::make_pair(((uint8_t) PlayfieldSwitch::LeftFlipperButtonSwitch)   | 128, &PinballHSM::onLeftFlipperButtonSwitchClosed));
+  schedulerRegistry.addScheduler(lampShow, 1000);
 }
 
 void playLampShow() {
   lampShow.playLampShow(LampShow::Sequence::Multiball);
+}
+
+void handleSwitches(uint8_t switchKey) {
+  // printf("In handle switches...\n");
+  switch (switchKey) {
+    case (int)PlayfieldSwitch::ShooterLanePlungerSwitch :
+      game.onShooterLanePlungerSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::ShooterLanePlungerSwitch | activated :
+      game.onShooterLanePlungerSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::ShooterLaneRampSwitch :
+      game.onShooterLaneRampSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::ShooterLaneRampSwitch | activated :
+      game.onShooterLaneRampSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::OuterLoopRightSwitch :
+      game.onOuterLoopRightSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::OuterLoopRightSwitch | activated :
+      game.onOuterLoopRightSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::OuterLoopLeftSwitch :
+      game.onOuterLoopLeftSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::OuterLoopLeftSwitch | activated :
+      game.onOuterLoopLeftSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::ThingRampSwitch :
+      game.onThingRampSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::ThingRampSwitch | activated :
+      game.onThingRampSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::ThingHoleSwitch :
+      game.onThingHoleSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::ThingHoleSwitch | activated :
+      game.onThingHoleSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::FarLeftInlaneSwitch :
+      game.onFarLeftInlaneSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::FarLeftInlaneSwitch | activated :
+      game.onFarLeftInlaneSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::LeftOutlaneSwitch :
+      game.onLeftOutlaneSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::LeftOutlaneSwitch | activated :
+      game.onLeftOutlaneSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::InnerLeftInlaneSwitch :
+      game.onLeftInnerInlaneSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::InnerLeftInlaneSwitch | activated :
+      game.onLeftInnerInlaneSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::RightInlaneSwitch :
+      game.onRightInlaneSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::RightInlaneSwitch | activated :
+      game.onRightInlaneSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::RightOutlaneSwitch :
+      game.onRightOutlaneSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::RightOutlaneSwitch | activated :
+      game.onRightOutlaneSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper1Switch :
+      game.onBumper1SwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper1Switch | activated :
+      game.onBumper1SwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper2Switch :
+      game.onBumper2SwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper2Switch | activated :
+      game.onBumper2SwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper3Switch :
+      game.onBumper3SwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper3Switch | activated :
+      game.onBumper3SwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper4Switch :
+      game.onBumper4SwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper4Switch | activated :
+      game.onBumper4SwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper5Switch :
+      game.onBumper5SwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::Bumper5Switch | activated :
+      game.onBumper5SwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::LeftFlipperButtonSwitch :
+      game.onLeftFlipperButtonSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::LeftFlipperButtonSwitch | activated :
+      game.onLeftFlipperButtonSwitchOpened();
+      break;
+
+    case (int)PlayfieldSwitch::RightFlipperButtonSwitch :
+      game.onRightFlipperButtonSwitchClosed();
+      break;
+
+    case (int)PlayfieldSwitch::RightFlipperButtonSwitch | activated :
+      game.onRightFlipperButtonSwitchOpened();
+      break;
+  }
 }

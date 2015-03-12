@@ -36,3 +36,178 @@
 1394058350 c:\users\christian\documents\codeblocks\addamsfamilypinballnew\lib\timer\pausetimer.h
 	<stdint.h>
 
+1408304560 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\autonomouskicker.cpp
+	"AutonomousKicker.h"
+	<propeller.h>
+	"Timer\CounterSpan.h"
+
+1408304570 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\autonomouskicker.h
+	"Scheduler.h"
+	"OutputActivator.h"
+	"OneTimeHitCounter.h"
+
+1407955402 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\scheduler.h
+	<stdint.h>
+	"ModelBase.h"
+
+1394054596 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\modelbase.h
+
+1408556641 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\outputactivator.h
+	<stdint.h>
+	<stdbool.h>
+
+1407959928 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\onetimehitcounter.h
+	<stdint.h>
+
+1391781148 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\timer\counterspan.h
+	<stdint.h>
+
+1407955368 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\modelbase.cpp
+	"ModelBase.h"
+
+1407960818 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\onetimehitcounter.cpp
+	"OneTimeHitCounter.h"
+
+1408299496 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\outputactivator.cpp
+	"OutputActivator.h"
+	"../Timer/CounterSpan.h"
+	<propeller.h>
+
+1407955482 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\scheduler.cpp
+	"Scheduler.h"
+	"../Timer/CounterSpan.h"
+	<propeller.h>
+
+1426192335 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\schedulerregistry.cpp
+	"SchedulerRegistry.h"
+	<propeller.h>
+	<stdint.h>
+
+1408303976 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\schedulerregistry.h
+	"Scheduler.h"
+
+1394743254 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\eventmessage.cpp
+	"EventMessage.h"
+
+1408304786 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\eventmessage.h
+	"Domain/ModelBase.h"
+
+1408305826 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\inoperationstate.cpp
+	"InOperationState.h"
+
+1408305696 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\inoperationstate.h
+	"StateBase.h"
+
+1409863293 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\statebase.h
+	"EventMessage.h"
+	<stdint.h>
+
+1426201241 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\pinballhsm.cpp
+	"PinballHSM.h"
+	"Game\StateBase.h"
+	<stdio.h>
+
+1409863293 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\pinballhsm.h
+	"Game\StateBase.h"
+	"Game\InOperationState.h"
+	"Domain\AutonomousKicker.h"
+	<stdint.h>
+
+1392068086 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\statebase.cpp
+
+1426199042 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshow.cpp
+	"LampShow.h"
+	"MultiballLampShowWorker.h"
+	<propeller.h>
+	<stdint.h>
+
+1426105728 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshow.h
+	"Domain\Scheduler.h"
+	"LampShowWorker.h"
+	<map>
+
+1426105728 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshowworker.h
+	"LampShow.h"
+	<stdint.h>
+	<map>
+
+1426105728 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\multiballlampshowworker.h
+	"LampShowWorker.h"
+
+1426105728 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshowworker.cpp
+	"LampShowWorker.h"
+
+1408566963 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\multiballlampshowworker.cpp
+	"MultiballLampShowWorker.h"
+	<stdio.h>
+
+1396328478 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\numbers\numbers.cpp
+	"libpropeller/numbers/numbers.h"
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\numbers\numbers.h
+	<string.h>
+	<limits.h>
+	"numbers.cpp"
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\numbers\numbers.cpp
+	"libpropeller/numbers/numbers.h"
+
+1396328478 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\serial\serial.s
+
+1407955592 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\timer\counterspan.c
+	<stdint.h>
+	<propeller.h>
+	"CounterSpan.h"
+
+1408563976 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\timer\pausetimer.cpp
+	"PauseTimer.h"
+	"CounterSpan.h"
+	<propeller.h>
+
+1394054750 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\timer\pausetimer.h
+	<stdint.h>
+
+1393970702 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\util\c++-alloc.cpp
+	<cstdlib>
+	<new>
+
+1426201155 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\master\main.cpp
+	<propeller.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdint.h>
+	"Game\PinballHSM.h"
+	"Domain\SchedulerRegistry.h"
+	"Lamps\LampShow.h"
+	"Domain\PlayfieldSwitchEnum.h"
+	"CogC_Drivers\IODriver\IODriverMailbox.h"
+	"libpropeller\serial\serial.h"
+	"libpropeller\sd\sd.h"
+
+1408556641 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\playfieldswitchenum.h
+
+1425500610 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\master\cogc_drivers\iodriver\iodrivermailbox.h
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\serial\serial.h
+	<cstdarg>
+	<propeller.h>
+	"libpropeller/numbers/numbers.h"
+	"libpropeller/streaminterface/streaminterface.h"
+	"libpropeller/printstream/printstream.h"
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\streaminterface\streaminterface.h
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\printstream\printstream.h
+	"libpropeller/numbers/numbers.h"
+	"libpropeller/streaminterface/streaminterface.h"
+	<stdio.h>
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\sd\sd.h
+	<propeller.h>
+	<stdarg.h>
+	"libpropeller/sd/sdsafespi.h"
+	"libpropeller/printstream/printstream.h"
+
+1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\sd\sdsafespi.h
+	<propeller.h>
+
