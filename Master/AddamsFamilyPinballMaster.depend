@@ -73,12 +73,12 @@
 	"../Timer/CounterSpan.h"
 	<propeller.h>
 
-1407955482 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\scheduler.cpp
+1426710629 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\scheduler.cpp
 	"Scheduler.h"
 	"../Timer/CounterSpan.h"
 	<propeller.h>
 
-1426192335 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\schedulerregistry.cpp
+1427321849 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\schedulerregistry.cpp
 	"SchedulerRegistry.h"
 	<propeller.h>
 	<stdint.h>
@@ -102,10 +102,9 @@
 	"EventMessage.h"
 	<stdint.h>
 
-1426201241 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\pinballhsm.cpp
+1426201364 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\pinballhsm.cpp
 	"PinballHSM.h"
 	"Game\StateBase.h"
-	<stdio.h>
 
 1409863293 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\pinballhsm.h
 	"Game\StateBase.h"
@@ -115,31 +114,32 @@
 
 1392068086 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\game\statebase.cpp
 
-1426199042 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshow.cpp
+1427059970 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshow.cpp
 	"LampShow.h"
 	"MultiballLampShowWorker.h"
+	"FileLampShowWorker.h"
+
+1427054250 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshow.h
+	"Domain\Scheduler.h"
+	"LampShowWorker.h"
+	"Domain\Scheduler.h"
+	"LampShowWorker.h"
 	<propeller.h>
 	<stdint.h>
 
-1426105728 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshow.h
-	"Domain\Scheduler.h"
-	"LampShowWorker.h"
-	<map>
-
-1426105728 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshowworker.h
+1426801700 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshowworker.h
 	"LampShow.h"
 	<stdint.h>
-	<map>
 
-1426105728 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\multiballlampshowworker.h
+1426801664 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\multiballlampshowworker.h
+	"LampShowWorker.h"
+	<propeller.h>
+
+1426797511 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshowworker.cpp
 	"LampShowWorker.h"
 
-1426105728 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\lampshowworker.cpp
-	"LampShowWorker.h"
-
-1408566963 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\multiballlampshowworker.cpp
+1426801935 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\multiballlampshowworker.cpp
 	"MultiballLampShowWorker.h"
-	<stdio.h>
 
 1396328478 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\numbers\numbers.cpp
 	"libpropeller/numbers/numbers.h"
@@ -171,22 +171,20 @@
 	<cstdlib>
 	<new>
 
-1426201155 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\master\main.cpp
+1427229158 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\master\main.cpp
 	<propeller.h>
 	<stdlib.h>
-	<stdio.h>
 	<stdint.h>
+	<stdio.h>
 	"Game\PinballHSM.h"
 	"Domain\SchedulerRegistry.h"
 	"Lamps\LampShow.h"
 	"Domain\PlayfieldSwitchEnum.h"
 	"CogC_Drivers\IODriver\IODriverMailbox.h"
-	"libpropeller\serial\serial.h"
-	"libpropeller\sd\sd.h"
 
 1408556641 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\domain\playfieldswitchenum.h
 
-1425500610 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\master\cogc_drivers\iodriver\iodrivermailbox.h
+1427308176 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\master\cogc_drivers\iodriver\iodrivermailbox.h
 
 1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\serial\serial.h
 	<cstdarg>
@@ -210,4 +208,127 @@
 
 1396328478 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\libpropeller\sd\sdsafespi.h
 	<propeller.h>
+
+1427416899 source:c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\filelampshowworker.cpp
+	"FileLampShowWorker.h"
+
+1427321971 c:\users\christian\documents\pinball\addams family\code\pinballaddamsfamily\lib\lamps\filelampshowworker.h
+	"LampShowWorker.h"
+	<propeller.h>
+	<stdio.h>
+
+1407958968 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\modelbase.cpp
+	"ModelBase.h"
+
+1394058196 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\modelbase.h
+
+1426714229 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\scheduler.cpp
+	"Scheduler.h"
+	"../Timer/CounterSpan.h"
+	<propeller.h>
+
+1407959002 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\scheduler.h
+	<stdint.h>
+	"ModelBase.h"
+
+1391784748 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\timer\counterspan.h
+	<stdint.h>
+
+1428010780 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\schedulerregistry.cpp
+	"SchedulerRegistry.h"
+	<propeller.h>
+	<stdint.h>
+	<stdio.h>
+
+1408307576 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\schedulerregistry.h
+	"Scheduler.h"
+
+1394746854 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\eventmessage.cpp
+	"EventMessage.h"
+
+1408308386 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\eventmessage.h
+	"Domain/ModelBase.h"
+
+1408309426 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\inoperationstate.cpp
+	"InOperationState.h"
+
+1408309296 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\inoperationstate.h
+	"StateBase.h"
+
+1409866893 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\statebase.h
+	"EventMessage.h"
+	<stdint.h>
+
+1428010829 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\pinballhsm.cpp
+	"PinballHSM.h"
+	"Game\StateBase.h"
+
+1428012491 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\pinballhsm.h
+	"Game\StateBase.h"
+	"Game\InOperationState.h"
+	"Lamps\LampShow.h"
+	"Domain\SchedulerRegistry.h"
+	"CogC_Drivers\IODriver\IODriverMailbox.h"
+	<stdint.h>
+
+1427057850 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\lamps\lampshow.h
+	"Domain\Scheduler.h"
+	"LampShowWorker.h"
+	"Domain\Scheduler.h"
+	"LampShowWorker.h"
+	<propeller.h>
+	<stdint.h>
+
+1426805300 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\lamps\lampshowworker.h
+	"LampShow.h"
+	<stdint.h>
+
+1427926319 c:\users\christian\documents\codeblocks\parallaxpropeller\pinballaddamsfamily\master\cogc_drivers\iodriver\iodrivermailbox.h
+
+1392071686 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\game\statebase.cpp
+
+1428012134 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\lamps\filelampshowworker.cpp
+	"FileLampShowWorker.h"
+
+1427925295 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\lamps\filelampshowworker.h
+	"LampShowWorker.h"
+	<propeller.h>
+	<stdio.h>
+
+1428007068 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\lamps\lampshow.cpp
+	"LampShow.h"
+	"FileLampShowWorker.h"
+	<stdio.h>
+
+1426801111 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\lamps\lampshowworker.cpp
+	"LampShowWorker.h"
+
+1407959192 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\timer\counterspan.c
+	<stdint.h>
+	<propeller.h>
+	"CounterSpan.h"
+
+1408567576 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\timer\pausetimer.cpp
+	"PauseTimer.h"
+	"CounterSpan.h"
+	<propeller.h>
+
+1394058350 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\timer\pausetimer.h
+	<stdint.h>
+
+1393974302 source:c:\users\christian\documents\codeblocks\parallaxpropeller\lib\util\c++-alloc.cpp
+	<cstdlib>
+	<new>
+
+1428012163 source:c:\users\christian\documents\codeblocks\parallaxpropeller\pinballaddamsfamily\master\main.cpp
+	<propeller.h>
+	<stdlib.h>
+	<stdint.h>
+	<stdio.h>
+	"Game\PinballHSM.h"
+	"Domain\SchedulerRegistry.h"
+	"Domain\PlayfieldSwitchEnum.h"
+	"CogC_Drivers\IODriver\IODriverMailbox.h"
+
+1408560241 c:\users\christian\documents\codeblocks\parallaxpropeller\lib\domain\playfieldswitchenum.h
 

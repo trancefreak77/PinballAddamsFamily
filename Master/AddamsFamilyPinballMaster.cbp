@@ -20,58 +20,49 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Linker>
-					<Add option="-s" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Os" />
 			<Add option="-Wall" />
-			<Add option="-mcmm -m32bit-doubles -fno-exceptions -fno-rtti -Dprintf=__simple_printf -mfcache" />
-			<Add directory="../lib" />
+			<Add option="-mxmmc" />
+			<Add directory="../../lib" />
+			<Add directory="../Master" />
 		</Compiler>
 		<Linker>
-			<Add option="-Os -Wall -mcmm -m32bit-doubles -fno-exceptions -fno-rtti -mfcache" />
+			<Add option="-Os -mxmmc" />
 			<Add library="CogC_Drivers\IODriver\bin\Release\IODriver.cog" />
-			<Add directory="../lib" />
+			<Add directory="../../lib" />
+			<Add directory="../Master" />
 		</Linker>
-		<Unit filename="../lib/Domain/AutonomousKicker.cpp" />
-		<Unit filename="../lib/Domain/AutonomousKicker.h" />
-		<Unit filename="../lib/Domain/ModelBase.cpp" />
-		<Unit filename="../lib/Domain/ModelBase.h" />
-		<Unit filename="../lib/Domain/OneTimeHitCounter.cpp" />
-		<Unit filename="../lib/Domain/OneTimeHitCounter.h" />
-		<Unit filename="../lib/Domain/OutputActivator.cpp" />
-		<Unit filename="../lib/Domain/OutputActivator.h" />
-		<Unit filename="../lib/Domain/Scheduler.cpp" />
-		<Unit filename="../lib/Domain/Scheduler.h" />
-		<Unit filename="../lib/Domain/SchedulerRegistry.cpp" />
-		<Unit filename="../lib/Domain/SchedulerRegistry.h" />
-		<Unit filename="../lib/Game/EventMessage.cpp" />
-		<Unit filename="../lib/Game/EventMessage.h" />
-		<Unit filename="../lib/Game/InOperationState.cpp" />
-		<Unit filename="../lib/Game/InOperationState.h" />
-		<Unit filename="../lib/Game/PinballHSM.cpp" />
-		<Unit filename="../lib/Game/PinballHSM.h" />
-		<Unit filename="../lib/Game/StateBase.cpp" />
-		<Unit filename="../lib/Game/StateBase.h" />
-		<Unit filename="../lib/Lamps/LampShow.cpp" />
-		<Unit filename="../lib/Lamps/LampShow.h" />
-		<Unit filename="../lib/Lamps/LampShowWorker.cpp" />
-		<Unit filename="../lib/Lamps/LampShowWorker.h" />
-		<Unit filename="../lib/Lamps/MultiballLampShowWorker.cpp" />
-		<Unit filename="../lib/Lamps/MultiballLampShowWorker.h" />
-		<Unit filename="../lib/Timer/CounterSpan.c">
+		<Unit filename="../../lib/Domain/ModelBase.cpp" />
+		<Unit filename="../../lib/Domain/ModelBase.h" />
+		<Unit filename="../../lib/Domain/PlayfieldSwitchEnum.h" />
+		<Unit filename="../../lib/Domain/Scheduler.cpp" />
+		<Unit filename="../../lib/Domain/Scheduler.h" />
+		<Unit filename="../../lib/Domain/SchedulerRegistry.cpp" />
+		<Unit filename="../../lib/Domain/SchedulerRegistry.h" />
+		<Unit filename="../../lib/Game/EventMessage.cpp" />
+		<Unit filename="../../lib/Game/EventMessage.h" />
+		<Unit filename="../../lib/Game/InOperationState.cpp" />
+		<Unit filename="../../lib/Game/InOperationState.h" />
+		<Unit filename="../../lib/Game/PinballHSM.cpp" />
+		<Unit filename="../../lib/Game/PinballHSM.h" />
+		<Unit filename="../../lib/Game/StateBase.cpp" />
+		<Unit filename="../../lib/Game/StateBase.h" />
+		<Unit filename="../../lib/Lamps/FileLampShowWorker.cpp" />
+		<Unit filename="../../lib/Lamps/FileLampShowWorker.h" />
+		<Unit filename="../../lib/Lamps/LampShow.cpp" />
+		<Unit filename="../../lib/Lamps/LampShow.h" />
+		<Unit filename="../../lib/Lamps/LampShowWorker.cpp" />
+		<Unit filename="../../lib/Lamps/LampShowWorker.h" />
+		<Unit filename="../../lib/Timer/CounterSpan.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/Timer/CounterSpan.h" />
-		<Unit filename="../lib/Timer/PauseTimer.cpp" />
-		<Unit filename="../lib/Timer/PauseTimer.h" />
-		<Unit filename="../lib/Util/c++-alloc.cpp" />
-		<Unit filename="../lib/libpropeller/numbers/numbers.cpp" />
-		<Unit filename="../lib/libpropeller/serial/serial.S" />
-		<Unit filename="../lib/libpropeller/serial/serial.h" />
+		<Unit filename="../../lib/Timer/CounterSpan.h" />
+		<Unit filename="../../lib/Timer/PauseTimer.cpp" />
+		<Unit filename="../../lib/Timer/PauseTimer.h" />
+		<Unit filename="../../lib/Util/c++-alloc.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
