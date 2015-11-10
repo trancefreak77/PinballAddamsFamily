@@ -23,14 +23,14 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Os" />
+			<Add option="-O3" />
 			<Add option="-Wall" />
 			<Add option="-mxmmc" />
 			<Add directory="../../lib" />
 			<Add directory="../Master" />
 		</Compiler>
 		<Linker>
-			<Add option="-Os -mxmmc" />
+			<Add option="-mxmmc" />
 			<Add library="CogC_Drivers\IODriver\bin\Release\IODriver.cog" />
 			<Add directory="../../lib" />
 			<Add directory="../Master" />

@@ -8,7 +8,7 @@
 #include "CogC_Drivers\IODriver\IODriverMailbox.h"
 
 #define MAX_LOOP_COUNTER 1
-#define SCHEDULER_COG_STACKSIZE 500
+#define SCHEDULER_COG_STACKSIZE 1000
 
 extern "C" void __cxa_pure_virtual() {
   while (1);
@@ -33,8 +33,7 @@ static struct {
 // Scheduler cog stack declaration
 static uint8_t schedulerCogStack[EXTRA_STACK_BYTES + SCHEDULER_COG_STACKSIZE];      // allocate space for the stack - you need to set up a
                                                                                     // stack for each Cog you plan on starting
-
-const uint32_t testIndex = 5000;
+const uint32_t testIndex = 10000;
 volatile uint8_t testArr[testIndex];
 const uint8_t activated = 128;
 PinballHSM game((ioDriverMailbox_t&) ioDriverPar.ioDriverMailbox);
@@ -59,10 +58,26 @@ uint8_t startIODriver(volatile void *parptr) {
 }
 
 void schedulerCog(void* par) {
+  printf("Starting schedulerCog...\n");
+  uint32_t tickArr[50];
   // Schedule tasks.
   SchedulerRegistry* pSchedulerRegistry = (SchedulerRegistry*) par;
+  uint32_t loopIndex = 0;
   while(1) {
+    uint32_t startCnt = CNT;
     pSchedulerRegistry->schedule();
+//    printf("After loop %d\n", loopIndex);
+    uint32_t endCnt = CNT;
+    tickArr[loopIndex] = endCnt - startCnt;
+    if (loopIndex == 49) {
+      loopIndex = 0;
+      for (uint32_t i = 0; i < 50; i++) {
+        printf("Loop %d took: %d\n", i, tickArr[i]);
+      }
+//      waitcnt(40000000);
+    }
+
+    loopIndex++;
   }
 }
 
@@ -96,7 +111,7 @@ int main (void) {
   game.init();
   SchedulerRegistry& schedulerRegistry = game.getSchedulerRegistry();
 //  fillPattern((uint8_t*) ioDriverPar.ioDriverStack, IO_DRIVER_STACK_SIZE * 4);
-  fillPattern((uint8_t*) schedulerCogStack, EXTRA_STACK_BYTES + SCHEDULER_COG_STACKSIZE);
+//  fillPattern((uint8_t*) schedulerCogStack, EXTRA_STACK_BYTES + SCHEDULER_COG_STACKSIZE);
 //  schedulerRegistry.addScheduler(lampShow, 31);
 //  lampShow.playLampShow(LampShow::Sequence::BallPlunged);
 
@@ -124,9 +139,9 @@ int main (void) {
     previousSwitchInpurtPort[loopCounter] = 2;
   }
 
-  waitcnt((80000000 * 5) + CNT);
-  int foundPos = findPattern((uint8_t*) schedulerCogStack, EXTRA_STACK_BYTES + SCHEDULER_COG_STACKSIZE);
-  printf("Found first pattern of schedulerCogStack at %d\n", foundPos);
+//  waitcnt((80000000 * 5) + CNT);
+//  int foundPos = findPattern((uint8_t*) schedulerCogStack, EXTRA_STACK_BYTES + SCHEDULER_COG_STACKSIZE);
+//  printf("Found first pattern of schedulerCogStack at %d\n", foundPos);
 
   while (1) {
 //    printf("IODriver loop took: %d\n", ioDriverPar.ioDriverMailbox.loopTicks);
